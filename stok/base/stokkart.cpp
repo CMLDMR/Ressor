@@ -45,7 +45,7 @@ void StokKart::setStokKartOid(const bsoncxx::oid &stokKartOid)
     mStokKartOid = stokKartOid;
 }
 
-QString StokKart::stokKartAdi()
+QString StokKart::KartAdi()
 {
 
     mongocxx::options::find findOptions;
@@ -81,5 +81,39 @@ QString StokKart::stokKartAdi()
     } catch (mongocxx::exception &e) {
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
         return QString();
+    }
+}
+
+bool StokKart::setKartAdi(const QString &kartAdi)
+{
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::STOKADI,kartAdi.toStdString()))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->collection.update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
     }
 }

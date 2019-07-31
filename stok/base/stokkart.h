@@ -42,10 +42,17 @@ public:
 
 
     ///
-    /// \brief stokKartAdi
+    /// \brief KartAdi
     /// \return
     /// Stok Adı Verir.
-    QString stokKartAdi();
+    QString KartAdi();
+
+    ///
+    /// \brief setKartAdi
+    /// \param kartAdi
+    /// \return
+    /// Stok Kart Adını Veri Tabanın da Değiştirir.
+    bool setKartAdi(const QString &kartAdi);
 
 
 private:
