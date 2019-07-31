@@ -25,15 +25,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        base/dbclass.cpp \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+        stok/stokkartdialog.cpp \
+        stok/stokmaindialog.cpp
 
 HEADERS += \
+        base/dbclass.h \
         mainwindow.h \
-        mongoheaders.h
+        mongoheaders.h \
+        stok/stokkartdialog.h \
+        stok/stokmaindialog.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+        stok/stokkartdialog.ui \
+        stok/stokmaindialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

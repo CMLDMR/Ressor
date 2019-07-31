@@ -1,11 +1,19 @@
 #ifndef DBCLASS_H
 #define DBCLASS_H
 
+#include "mongoheaders.h"
 
-class DBClass : public mongocxx::database
+class DBClass
 {
 public:
-    DBClass();
+    DBClass(mongocxx::database* _db);
+
+
+    mongocxx::database* db();
+
+
+private:
+    mongocxx::database* mDB;
 };
 
 #endif // DBCLASS_H

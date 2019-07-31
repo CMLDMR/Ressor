@@ -4,6 +4,8 @@
 #include "../url.h"
 
 
+#include "stok/stokmaindialog.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -20,21 +22,23 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
 
-    mClient->database("Ressor").collection("Test").insert_one(make_document(kvp("test333","test1")).view());
+    mDB = mClient->database("Ressor");
+
+//    mClient->database("Ressor").collection("Test").insert_one(make_document(kvp("test333","test1")).view());
 
 
 
-    try {
-        auto cursor = mClient->database("Ressor").collection("Test").find(document{}.view());
+//    try {
+//        auto cursor = mClient->database("Ressor").collection("Test").find(document{}.view());
 
-        for( auto doc : cursor )
-        {
-            std::cout << bsoncxx::to_json(doc) << std::endl;
-        }
+//        for( auto doc : cursor )
+//        {
+//            std::cout << bsoncxx::to_json(doc) << std::endl;
+//        }
 
-    } catch (mongocxx::exception &e) {
+//    } catch (mongocxx::exception &e) {
 
-    }
+//    }
 
 
 
@@ -43,4 +47,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_pushButton_Stok_clicked()
+{
+    auto mDialog = new StokMainDialog(&mDB);
+
+    mDialog->exec();
 }
