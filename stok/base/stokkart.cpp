@@ -6,10 +6,23 @@ StokKart StokKart::Create_StokKart(mongocxx::collection &_collection)
     return kart;
 }
 
+StokKart StokKart::Load_StokKart(mongocxx::collection &_collection, const bsoncxx::oid &kartOid)
+{
+    StokKart kart(_collection,kartOid);
+    return kart;
+}
+
 const bsoncxx::builder::basic::document StokKart::StokKartDocument()
 {
 
     auto rDoc = document{};
+
+    try {
+        rDoc.append(kvp(STOKKARTKEY::STOKADI,this->KartAdi().toStdString()));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+
+    }
 
 
 
@@ -19,7 +32,26 @@ const bsoncxx::builder::basic::document StokKart::StokKartDocument()
 StokKart::StokKart(mongocxx::collection &_collection)
     :collection(_collection)
 {
+    try {
+        auto ins = this->collection.insert_one(document{}.view());
 
+        if( ins.has_value() )
+        {
+            try {
+                this->setStokKartOid(ins.value().inserted_id().get_oid().value);
+            } catch (bsoncxx::exception &e) {
+                std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+            }
+        }
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+    }
+}
+
+StokKart::StokKart(mongocxx::collection &_collection, const bsoncxx::oid &kartOid)
+    :collection(_collection)
+{
+    this->setStokKartOid(kartOid);
 }
 
 bsoncxx::builder::basic::document StokKart::filterByOid()
@@ -82,6 +114,10 @@ QString StokKart::KartAdi()
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
         return QString();
     }
+
+
+
+
 }
 
 bool StokKart::setKartAdi(const QString &kartAdi)

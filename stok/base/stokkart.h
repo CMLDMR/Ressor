@@ -22,6 +22,14 @@ public:
 
 
     ///
+    /// \brief Load_StokKart
+    /// \param _collection
+    /// \param kartOid
+    /// \return
+    /// Stok Kartını Verilen ID ile veritabanından Yükler ve verir.
+    static StokKart Load_StokKart(mongocxx::collection &_collection , const bsoncxx::oid &kartOid );
+
+    ///
     /// \brief StokKartDocument
     /// \return
     /// StokKartını BSON document olarak döndürür.
@@ -61,6 +69,13 @@ private:
     /// \param _collection
     /// StokKart Yapıcı Fonksiyon
     StokKart(mongocxx::collection &_collection);
+
+    ///
+    /// \brief StokKart
+    /// \param _collection
+    /// \param kartOid
+    /// Stok Kartını kartOid ile Yükler ve Verir.
+    StokKart(mongocxx::collection &_collection , const bsoncxx::oid &kartOid);
 
 
     ///
