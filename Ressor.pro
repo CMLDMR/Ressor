@@ -38,3 +38,18 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+
+
+
+win32: LIBS += -L$$PWD/libmongodb/lib/ -lbsoncxx
+
+INCLUDEPATH += $$PWD/libmongodb/include/bsoncxx/v_noabi
+DEPENDPATH += $$PWD/libmongodb/include/bsoncxx/v_noabi
+
+
+
+win32: LIBS += -L$$PWD/libmongodb/lib/ -lmongocxx
+
+INCLUDEPATH += $$PWD/libmongodb/include/mongocxx/v_noabi
+DEPENDPATH += $$PWD/libmongodb/include/mongocxx/v_noabi
