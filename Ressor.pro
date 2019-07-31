@@ -29,7 +29,8 @@ SOURCES += \
         mainwindow.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+        mongoheaders.h
 
 FORMS += \
         mainwindow.ui
@@ -53,3 +54,9 @@ win32: LIBS += -L$$PWD/libmongodb/lib/ -lmongocxx
 
 INCLUDEPATH += $$PWD/libmongodb/include/mongocxx/v_noabi
 DEPENDPATH += $$PWD/libmongodb/include/mongocxx/v_noabi
+
+
+
+
+INCLUDEPATH += $$PWD/../../../../../local/boost_1_70_0
+DEPENDPATH += $$PWD/../../../../../local/boost_1_70_0

@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include "mongoheaders.h"
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -17,6 +20,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+
+    mongocxx::client* mClient;
 };
 
 #endif // MAINWINDOW_H
