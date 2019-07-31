@@ -2,17 +2,17 @@
 #define YENISTOKKARTDIALOG_H
 
 #include <QDialog>
-
+#include "base/dbclass.h"
 namespace Ui {
 class YeniStokKartDialog;
 }
 
-class YeniStokKartDialog : public QDialog
+class YeniStokKartDialog : public QDialog , public DBClass
 {
     Q_OBJECT
 
 public:
-    explicit YeniStokKartDialog(QWidget *parent = nullptr);
+    explicit YeniStokKartDialog(mongocxx::database* _db , QWidget *parent = nullptr);
     ~YeniStokKartDialog();
 
 private:

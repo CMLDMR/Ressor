@@ -28,20 +28,25 @@ SOURCES += \
         base/dbclass.cpp \
         main.cpp \
         mainwindow.cpp \
+        stok/base/stokkart.cpp \
         stok/stokkartdialog.cpp \
-        stok/stokmaindialog.cpp
+        stok/stokmaindialog.cpp \
+        stok/yenistokkartdialog.cpp
 
 HEADERS += \
         base/dbclass.h \
         mainwindow.h \
         mongoheaders.h \
+        stok/base/stokkart.h \
         stok/stokkartdialog.h \
-        stok/stokmaindialog.h
+        stok/stokmaindialog.h \
+        stok/yenistokkartdialog.h
 
 FORMS += \
         mainwindow.ui \
         stok/stokkartdialog.ui \
-        stok/stokmaindialog.ui
+        stok/stokmaindialog.ui \
+        stok/yenistokkartdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
