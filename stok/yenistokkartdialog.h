@@ -15,6 +15,9 @@ public:
     explicit YeniStokKartDialog(mongocxx::database* _db , QWidget *parent = nullptr);
     ~YeniStokKartDialog();
 
+private slots:
+    void on_pushButton_StokKaydet_clicked();
+
 private:
     Ui::YeniStokKartDialog *ui;
 };
