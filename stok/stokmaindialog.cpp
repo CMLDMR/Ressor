@@ -2,6 +2,7 @@
 #include "ui_stokmaindialog.h"
 
 #include "stokkartdialog.h"
+#include "yenistokkartdialog.h"
 
 StokMainDialog::StokMainDialog(mongocxx::database *_db, QWidget *parent) :
     DBClass (_db),
@@ -18,9 +19,16 @@ StokMainDialog::~StokMainDialog()
     delete ui;
 }
 
-void StokMainDialog::on_pushButton_STOKKART_clicked()
-{
-    auto mDialog = std::make_unique<StokKartDialog>(this->db());
+//void StokMainDialog::on_pushButton_STOKKART_clicked()
+//{
+//    auto mDialog = std::make_unique<StokKartDialog>(this->db());
 
-    mDialog->exec();
+//    mDialog->exec();
+//}
+
+void StokMainDialog::on_pushButton_StokKartTanimla_clicked()
+{
+        auto mDialog = std::make_unique<YeniStokKartDialog>(this->db());
+
+        mDialog->exec();
 }

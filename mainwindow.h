@@ -19,7 +19,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_Stok_clicked();
+
+    void on_actionStok_Kartlar_triggered();
 
 private:
     Ui::MainWindow *ui;

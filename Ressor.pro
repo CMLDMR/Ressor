@@ -29,6 +29,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         stok/base/stokkart.cpp \
+        stok/base/stokkategori.cpp \
         stok/stokkartdialog.cpp \
         stok/stokmaindialog.cpp \
         stok/yenistokkartdialog.cpp
@@ -38,6 +39,7 @@ HEADERS += \
         mainwindow.h \
         mongoheaders.h \
         stok/base/stokkart.h \
+        stok/base/stokkategori.h \
         stok/stokkartdialog.h \
         stok/stokmaindialog.h \
         stok/yenistokkartdialog.h

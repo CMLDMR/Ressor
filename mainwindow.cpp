@@ -49,9 +49,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_Stok_clicked()
-{
-    auto mDialog = new StokMainDialog(&mDB);
 
-    mDialog->exec();
+void MainWindow::on_actionStok_Kartlar_triggered()
+{
+
+
+    ui->tabWidget->insertTab(ui->tabWidget->count(),new StokMainDialog(&mDB),"Stok Kart Tanımlama");
+
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+
+//    auto mDialog = new StokMainDialog(&mDB);
+
+//    mDialog->exec();
 }

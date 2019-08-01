@@ -198,7 +198,7 @@ bool StokKart::setStokKodu(const QString &stokKodu)
 
 
     try {
-        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::STOKADI,stokKodu.toStdString()))));
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::STOKODU,stokKodu.toStdString()))));
     } catch (bsoncxx::exception &e) {
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
         return false;

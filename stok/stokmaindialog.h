@@ -17,7 +17,9 @@ public:
     ~StokMainDialog();
 
 private slots:
-    void on_pushButton_STOKKART_clicked();
+//    void on_pushButton_STOKKART_clicked();
+
+    void on_pushButton_StokKartTanimla_clicked();
 
 private:
     Ui::StokMainDialog *ui;
