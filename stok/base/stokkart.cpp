@@ -153,3 +153,75 @@ bool StokKart::setKartAdi(const QString &kartAdi)
         return false;
     }
 }
+
+QString StokKart::StokKodu()
+{
+    mongocxx::options::find findOptions;
+
+
+    auto project = document{};
+
+    try {
+        project.append(kvp(STOKKARTKEY::STOKODU,true));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+    }
+
+
+    findOptions.projection(project.view());
+
+
+    try {
+        auto val = this->collection.find_one(this->filterByOid().view(),findOptions);
+
+        if( val.has_value() )
+        {
+            try {
+                return QString::fromStdString(val.value().view()[STOKKARTKEY::STOKODU].get_utf8().value.to_string());
+            } catch (bsoncxx::exception &e) {
+                std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+                return QString();
+            }
+        }else{
+            return QString();
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return QString();
+    }
+}
+
+bool StokKart::setStokKodu(const QString &stokKodu)
+{
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::STOKADI,stokKodu.toStdString()))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->collection.update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}

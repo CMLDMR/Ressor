@@ -6,7 +6,9 @@
 #include <QString>
 
 namespace STOKKARTKEY {
+    static const std::string STOKCOLLECTION{"stokkart"};
     static const std::string STOKADI{"stokadı"};
+    static const std::string STOKODU{"stokodu"};
 }
 
 class StokKart
@@ -14,10 +16,10 @@ class StokKart
 public:
 
     ///
-    /// \brief Create_StokKart
+    /// \brief Veri Tabanına Bağlı ID Olan Boş Bir Adet Stok Kartı Oluşturur.
     /// \param _collection
     /// \return
-    /// Veri Tabanına Bağlı Bir Adet Stok Kartı Oluşturur.
+    /// StokKart
     static StokKart Create_StokKart(mongocxx::collection &_collection);
 
 
@@ -61,6 +63,20 @@ public:
     /// \return
     /// Stok Kart Adını Veri Tabanın da Değiştirir.
     bool setKartAdi(const QString &kartAdi);
+
+
+    ///
+    /// \brief StokKodu: Stok Kodu Veri Tabanından Geri Döndürür.
+    /// \return
+    /// "QString"
+    QString StokKodu();
+
+    ///
+    /// \brief setStokKodu: Stok Kodunu Veri Tabanında Set Eder.
+    /// \param stokKodu
+    /// \return
+    /// Kayıt Başarılı ise "true" yoksa "false" döndürür.
+    bool setStokKodu( const QString &stokKodu);
 
 
 private:
