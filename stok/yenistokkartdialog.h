@@ -22,6 +22,9 @@ private slots:
 
 private:
     Ui::YeniStokKartDialog *ui;
+
+
+    mongocxx::collection mKategoriCollection;
 };
 
 #endif // YENISTOKKARTDIALOG_H

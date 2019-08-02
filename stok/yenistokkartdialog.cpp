@@ -4,6 +4,7 @@
 
 #include "base/stokkart.h"
 #include "stokkategoridialog.h"
+#include "base/stokkategori.h"
 
 #include <QMessageBox>
 
@@ -13,6 +14,20 @@ YeniStokKartDialog::YeniStokKartDialog(mongocxx::database *_db, QWidget *parent)
     ui(new Ui::YeniStokKartDialog)
 {
     ui->setupUi(this);
+
+    mKategoriCollection = this->db()->collection(STOKKATEGORI::KATEGORICOLLECTION);
+
+
+
+    auto KatList = STOKKATEGORI::StokKategori::GetKategoriList(&mKategoriCollection);
+    ui->comboBox_StokKategori->clear();
+    for( auto doc : KatList )
+    {
+        ui->comboBox_StokKategori->addItem(doc->KategoriAdi(),doc->kategoriOid().to_string().c_str());
+    }
+
+
+
 }
 
 YeniStokKartDialog::~YeniStokKartDialog()
