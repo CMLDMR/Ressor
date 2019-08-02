@@ -34,6 +34,7 @@ SOURCES += \
         stok/stokkartdialog.cpp \
         stok/stokkategoridialog.cpp \
         stok/stokmaindialog.cpp \
+        stok/yenistokbirimekledialog.cpp \
         stok/yenistokkartdialog.cpp
 
 HEADERS += \
@@ -46,6 +47,7 @@ HEADERS += \
         stok/stokkartdialog.h \
         stok/stokkategoridialog.h \
         stok/stokmaindialog.h \
+        stok/yenistokbirimekledialog.h \
         stok/yenistokkartdialog.h
 
 FORMS += \
@@ -53,6 +55,7 @@ FORMS += \
         stok/stokkartdialog.ui \
         stok/stokkategoridialog.ui \
         stok/stokmaindialog.ui \
+        stok/yenistokbirimekledialog.ui \
         stok/yenistokkartdialog.ui
 
 # Default rules for deployment.
