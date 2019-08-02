@@ -4,6 +4,7 @@
 
 #include "base/stokkart.h"
 #include "stokkategoridialog.h"
+#include "yenistokbirimekledialog.h"
 #include "base/stokkategori.h"
 
 #include <QMessageBox>
@@ -74,6 +75,13 @@ void YeniStokKartDialog::on_pushButton_StokKaydet_clicked()
 void YeniStokKartDialog::on_pushButton_YeniKategoriEkle_clicked()
 {
     auto mDialog = std::make_unique<StokKategoriDialog>(this->db());
+
+    mDialog->exec();
+}
+
+void YeniStokKartDialog::on_pushButton_YeniBirimEkle_clicked()
+{
+    auto mDialog = std::make_unique<YeniStokBirimEkleDialog>(this->db());
 
     mDialog->exec();
 }

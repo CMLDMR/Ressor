@@ -20,6 +20,8 @@ private slots:
 
     void on_pushButton_YeniKategoriEkle_clicked();
 
+    void on_pushButton_YeniBirimEkle_clicked();
+
 private:
     Ui::YeniStokKartDialog *ui;
 
