@@ -18,7 +18,6 @@ YeniStokBirimEkleDialog::YeniStokBirimEkleDialog(mongocxx::database *_db, QWidge
 
     this->initList();
 
-
 }
 
 YeniStokBirimEkleDialog::~YeniStokBirimEkleDialog()
@@ -30,34 +29,9 @@ YeniStokBirimEkleDialog::~YeniStokBirimEkleDialog()
 void YeniStokBirimEkleDialog::on_pushButton_YeniBirimEkle_clicked()
 {
 
-
     auto stokBirim = StokBirim::StokBirim::CreateStokBirim(this->db(),ui->lineEdit_YeniBirimAdi->text());
 
-
-    if( stokBirim )
-    {
-        std::cout << "VALUE" << std::endl;
-    }else{
-        std::cout << "NOVALUE() " << std::endl;
-    }
-
-
-    if( stokBirim.has_value() )
-    {
-        std::cout << stokBirim->getBirimAdi().toStdString() << std::endl;
-        std::cout << stokBirim->getBirimOid().to_string() << std::endl;
-    }else{
-        std::cout << "NOVALUE" << std::endl;
-    }
-
-
     this->initList();
-
-
-
-
-
-
 
 }
 
@@ -67,12 +41,6 @@ void YeniStokBirimEkleDialog::initList()
     mModel->removeRows(0,mModel->rowCount());
     for( auto item : cursor )
     {
-        std::cout << item->getBirimAdi().toStdString() << std::endl;
-
-        mModel->insertRow(0,item->newQStandardItem());
-        //        if( item )
-//        {
-//
-//        }
+        mModel->insertRow(mModel->rowCount(),item->newQStandardItem());
     }
 }
