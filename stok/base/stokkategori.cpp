@@ -2,22 +2,23 @@
 
 
 
-STOKKATEGORI::StokKategori STOKKATEGORI::StokKategori::Create_Kategori(mongocxx::collection &collection, const QString &kategoriName)
+STOKKATEGORI::StokKategori STOKKATEGORI::StokKategori::Create_Kategori( mongocxx::collection *collection, const QString &kategoriName )
 {
     StokKategori kat(collection,kategoriName);
     return kat;
 }
 
-QVector<STOKKATEGORI::StokKategori> STOKKATEGORI::StokKategori::GetKategoriList(mongocxx::collection &collection)
+QVector<STOKKATEGORI::StokKategori *> STOKKATEGORI::StokKategori::GetKategoriList( mongocxx::collection *collection )
 {
-    QVector<StokKategori> list;
+    QVector<StokKategori*> list;
     try {
-        auto cursor = collection.find(document{}.view());
+        auto cursor = collection->find(document{}.view());
 
         for( auto doc : cursor )
         {
+            std::cout << "GETLIST: " << bsoncxx::to_json(doc) << std::endl;
             try {
-                StokKategori kat(collection,doc["_id"].get_oid().value);
+                auto kat = new StokKategori(collection,doc["_id"].get_oid().value);
                 list.push_back(kat);
             } catch (bsoncxx::exception &e) {
                 std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
@@ -30,7 +31,7 @@ QVector<STOKKATEGORI::StokKategori> STOKKATEGORI::StokKategori::GetKategoriList(
     return list;
 }
 
-bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection &collection, const bsoncxx::oid &oid)
+bool STOKKATEGORI::StokKategori::DeleteKategori( mongocxx::collection *collection, const bsoncxx::oid &oid )
 {
     auto filter = document{};
 
@@ -43,7 +44,7 @@ bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection &collection
 
 
     try {
-        auto del = collection.delete_one(filter.view());
+        auto del = collection->delete_one(filter.view());
         if( del.has_value() )
         {
             if( del.value().deleted_count() )
@@ -61,7 +62,7 @@ bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection &collection
     }
 }
 
-bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection &collection, const QString &kategoriName)
+bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection *collection, const QString &kategoriName)
 {
     auto filter = document{};
 
@@ -74,7 +75,7 @@ bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection &collection
 
 
     try {
-        auto del = collection.delete_one(filter.view());
+        auto del = collection->delete_one(filter.view());
         if( del.has_value() )
         {
             if( del.value().deleted_count() )
@@ -95,6 +96,10 @@ bool STOKKATEGORI::StokKategori::DeleteKategori(mongocxx::collection &collection
 void STOKKATEGORI::StokKategori::setKategoriOid(const bsoncxx::oid &oid)
 {
     mKategoriOid = oid;
+    this->setData(mKategoriOid.to_string().c_str(),KategoriOid);
+    this->setData(this->KategoriAdi(),KategotiName);
+    this->setText(this->KategoriAdi());
+    this->setData(this->KategoriAdi(),Qt::DisplayRole);
 }
 
 bsoncxx::oid STOKKATEGORI::StokKategori::kategoriOid() const
@@ -116,13 +121,14 @@ bool STOKKATEGORI::StokKategori::setKategoriAdi(const QString &kategoriAdi)
 
 
     try {
-        auto upt = this->mCollection.update_one(this->filter().view(),setDoc.view());
+        auto upt = this->mCollection->update_one(this->filter().view(),setDoc.view());
 
         if( upt.has_value() )
         {
             if( upt.value().modified_count() )
             {
                 this->setData(kategoriAdi.toStdString().c_str(),KategotiName);
+                this->setText(kategoriAdi);
                 return true;
             }else{
                 return false;
@@ -140,7 +146,7 @@ bool STOKKATEGORI::StokKategori::setKategoriAdi(const QString &kategoriAdi)
 QString STOKKATEGORI::StokKategori::KategoriAdi()
 {
     try {
-        auto val = this->mCollection.find_one(this->filter().view());
+        auto val = this->mCollection->find_one(this->filter().view());
         if( val.has_value() )
         {
             try {
@@ -161,7 +167,7 @@ QString STOKKATEGORI::StokKategori::KategoriAdi()
 bool STOKKATEGORI::StokKategori::Deletekategori()
 {
     try {
-        auto del = mCollection.delete_one(this->filter().view());
+        auto del = mCollection->delete_one(this->filter().view());
         if( del.has_value() )
         {
             if( del.value().deleted_count() )
@@ -179,11 +185,11 @@ bool STOKKATEGORI::StokKategori::Deletekategori()
     }
 }
 
-STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection)
+STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection *collection)
     :mCollection(collection)
 {
     try {
-        auto ins = this->mCollection.insert_one(document{}.view());
+        auto ins = this->mCollection->insert_one(document{}.view());
 
         if( ins.has_value() )
         {
@@ -199,7 +205,7 @@ STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection)
     }
 }
 
-STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection, const QString &kategoriName)
+STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection *collection, const QString &kategoriName)
     :mCollection(collection)
 {
     auto filter = document{};
@@ -213,12 +219,13 @@ STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection, const
 
 
     try {
-        auto val = collection.find_one(filter.view());
+        auto val = collection->find_one(filter.view());
 
         if( val.has_value() )
         {
             try {
                 this->setKategoriOid(val.value().view()["_id"].get_oid().value);
+                this->setText(kategoriName);
                 return;
             } catch (bsoncxx::exception &e) {
                 std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
@@ -231,13 +238,14 @@ STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection, const
 
 
     try {
-        auto ins = this->mCollection.insert_one(document{}.view());
+        auto ins = this->mCollection->insert_one(document{}.view());
 
         if( ins.has_value() )
         {
             try {
                 this->setKategoriOid(ins.value().inserted_id().get_oid().value);
                 this->setKategoriAdi(kategoriName);
+                this->setText(kategoriName);
             } catch (bsoncxx::exception &e) {
                 std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
             }
@@ -247,9 +255,15 @@ STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection, const
     }
 }
 
-STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection, const bsoncxx::oid &oid)
+STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection *collection, const bsoncxx::oid &oid)
+    :mCollection(collection)
 {
     this->setKategoriOid(oid);
+}
+
+STOKKATEGORI::StokKategori::~StokKategori()
+{
+    std::cout << "Deleted StokKategori " << this->text().toStdString() << std::endl;
 }
 
 bsoncxx::builder::basic::document STOKKATEGORI::StokKategori::filter()

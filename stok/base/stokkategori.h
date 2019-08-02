@@ -15,13 +15,16 @@ static const std::string KATEGORIADI{"stokkategoriadi"};
 class StokKategori : public QStandardItem
 {
 public:
+
+    ~StokKategori();
+
     ///
     /// \brief Create_Kategori: Yeni Bir Kategori Oluşturur ve Geri Döndürür.
     /// \param collection
     /// \param kategoriName
     /// \return
     /// StokKategori
-    static StokKategori Create_Kategori(mongocxx::collection& collection, const QString &kategoriName );
+    static StokKategori Create_Kategori(mongocxx::collection *collection, const QString &kategoriName );
 
 
     ///
@@ -29,7 +32,7 @@ public:
     /// \param collection
     /// \return
     /// QVector<StokKategori>
-    static QVector<StokKategori> GetKategoriList(mongocxx::collection &collection);
+    static QVector<StokKategori*> GetKategoriList(mongocxx::collection *collection);
 
     ///
     /// \brief DeleteKategori: Veritabanından oid IDli kategoriyi siler
@@ -37,7 +40,7 @@ public:
     /// \param oid
     /// \return
     /// Başarılı ise true yoksa false döndürür.
-    static bool DeleteKategori( mongocxx::collection &collection , const bsoncxx::oid &oid);
+    static bool DeleteKategori(mongocxx::collection *collection , const bsoncxx::oid &oid);
 
     ///
     /// \brief DeleteKategori: Veritabanından kategoriName adlı kategoriyi siler
@@ -45,7 +48,7 @@ public:
     /// \param kategoriName
     /// \return
     /// Başarılı ise true yoksa false döndürür.
-    static bool DeleteKategori( mongocxx::collection &collection , const QString &kategoriName );
+    static bool DeleteKategori(mongocxx::collection *collection , const QString &kategoriName );
 
     ///
     /// \brief setKategoriOid: Kategori item ID Set Eder.
@@ -79,11 +82,11 @@ public:
     bool Deletekategori();
 
 private:
-    StokKategori(mongocxx::collection& collection);
-    StokKategori(mongocxx::collection& collection,const QString &kategoriName);
-    StokKategori(mongocxx::collection& collection , const bsoncxx::oid &oid);
+    StokKategori(mongocxx::collection* collection);
+    StokKategori(mongocxx::collection* collection,const QString &kategoriName);
+    StokKategori(mongocxx::collection* collection , const bsoncxx::oid &oid);
 
-    mongocxx::collection mCollection;
+    mongocxx::collection* mCollection;
 
     bsoncxx::oid mKategoriOid;
 
