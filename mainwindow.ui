@@ -21,7 +21,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>-1</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -35,16 +35,6 @@
       <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="tab">
-       <attribute name="title">
-        <string>Tab 1</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Tab 2</string>
-       </attribute>
-      </widget>
      </widget>
     </item>
    </layout>
@@ -68,6 +58,8 @@
      <string>Stok</string>
     </property>
     <addaction name="actionStok_Kartlar"/>
+    <addaction name="actionStok_Birimleri"/>
+    <addaction name="actionStok_Kategorileri"/>
    </widget>
    <addaction name="menuCari"/>
    <addaction name="menuStok"/>
@@ -84,6 +76,16 @@
   <action name="actionStok_Kartlar">
    <property name="text">
     <string>Stok Kartları</string>
+   </property>
+  </action>
+  <action name="actionStok_Birimleri">
+   <property name="text">
+    <string>Stok Birimleri</string>
+   </property>
+  </action>
+  <action name="actionStok_Kategorileri">
+   <property name="text">
+    <string>Stok Kategorileri</string>
    </property>
   </action>
  </widget>
