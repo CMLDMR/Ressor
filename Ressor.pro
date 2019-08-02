@@ -28,6 +28,7 @@ SOURCES += \
         base/dbclass.cpp \
         main.cpp \
         mainwindow.cpp \
+        stok/base/stokbirim.cpp \
         stok/base/stokkart.cpp \
         stok/base/stokkategori.cpp \
         stok/stokkartdialog.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
         base/dbclass.h \
         mainwindow.h \
         mongoheaders.h \
+        stok/base/stokbirim.h \
         stok/base/stokkart.h \
         stok/base/stokkategori.h \
         stok/stokkartdialog.h \
