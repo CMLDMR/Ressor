@@ -122,6 +122,7 @@ bool STOKKATEGORI::StokKategori::setKategoriAdi(const QString &kategoriAdi)
         {
             if( upt.value().modified_count() )
             {
+                this->setData(kategoriAdi.toStdString().c_str(),KategotiName);
                 return true;
             }else{
                 return false;
@@ -188,6 +189,7 @@ STOKKATEGORI::StokKategori::StokKategori(mongocxx::collection &collection)
         {
             try {
                 this->setKategoriOid(ins.value().inserted_id().get_oid().value);
+                this->setData(this->kategoriOid().to_string().c_str(),KategoriOid);
             } catch (bsoncxx::exception &e) {
                 std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
             }

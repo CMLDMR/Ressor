@@ -5,13 +5,14 @@
 #include "mongoheaders.h"
 #include <QString>
 #include <QVector>
+#include <QStandardItem>
 
 namespace STOKKATEGORI {
 
 static const std::string KATEGORICOLLECTION{"stokkategori"};
 static const std::string KATEGORIADI{"stokkategoriadi"};
 
-class StokKategori
+class StokKategori : public QStandardItem
 {
 public:
     ///
@@ -87,6 +88,12 @@ private:
     bsoncxx::oid mKategoriOid;
 
     document filter();
+
+
+    enum {
+        KategoriOid = Qt::UserRole + 1,
+        KategotiName
+    };
 
 
 };
