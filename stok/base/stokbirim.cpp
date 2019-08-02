@@ -57,6 +57,68 @@ QVector<StokBirim::StokBirim* > StokBirim::StokBirim::GetStokBirimList(mongocxx:
     return list;
 }
 
+bool StokBirim::StokBirim::deleteBirim()
+{
+    auto filter = document{};
+
+    try {
+        filter.append(kvp("_id",this->getBirimOid()));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto del = this->db()->collection(StokBirimCollection).delete_one(filter.view());
+        if( del )
+        {
+            if( del.value().deleted_count() )
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+bool StokBirim::StokBirim::deleteBirim(mongocxx::database *db, const bsoncxx::oid &oid)
+{
+    auto filter = document{};
+
+    try {
+        filter.append(kvp("_id",oid));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto del = db->collection(StokBirimCollection).delete_one(filter.view());
+        if( del )
+        {
+            if( del.value().deleted_count() )
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
 QStandardItem *StokBirim::StokBirim::newQStandardItem()
 {
     QStandardItem* item = new QStandardItem();

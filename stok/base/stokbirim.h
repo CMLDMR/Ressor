@@ -24,6 +24,11 @@ public:
     static QVector<StokBirim *> GetStokBirimList(mongocxx::database *_db);
 
 
+    bool deleteBirim();
+
+    static bool deleteBirim( mongocxx::database* db , const bsoncxx::oid &oid );
+
+
     QStandardItem* newQStandardItem();
 
     void setBirimAdi( const QString &newBirimAdi );
