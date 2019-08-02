@@ -44,3 +44,17 @@ void YeniStokBirimEkleDialog::initList()
         mModel->insertRow(mModel->rowCount(),item->newQStandardItem());
     }
 }
+
+void YeniStokBirimEkleDialog::on_pushButton_deleteSecili_clicked()
+{
+    auto indexes = ui->listView->selectionModel()->selectedIndexes();
+
+    for( auto item : indexes )
+    {
+        if( StokBirim::StokBirim::deleteBirim(this->db(),bsoncxx::oid{item.data(Qt::UserRole+1).toString().toStdString()}))
+        {
+            this->initList();
+            break;
+        }
+    }
+}

@@ -22,6 +22,8 @@ public:
 private slots:
     void on_pushButton_YeniBirimEkle_clicked();
 
+    void on_pushButton_deleteSecili_clicked();
+
 private:
     Ui::YeniStokBirimEkleDialog *ui;
 
