@@ -16,7 +16,6 @@ QVector<STOKKATEGORI::StokKategori *> STOKKATEGORI::StokKategori::GetKategoriLis
 
         for( auto doc : cursor )
         {
-            std::cout << "GETLIST: " << bsoncxx::to_json(doc) << std::endl;
             try {
                 auto kat = new StokKategori(collection,doc["_id"].get_oid().value);
                 list.push_back(kat);
