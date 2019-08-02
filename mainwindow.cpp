@@ -5,7 +5,9 @@
 
 
 #include "stok/stokmaindialog.h"
-
+#include "stok/yenistokbirimekledialog.h"
+#include "stok/stokkategoridialog.h"
+#include "stok/yenistokkartdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -61,4 +63,26 @@ void MainWindow::on_actionStok_Kartlar_triggered()
 //    auto mDialog = new StokMainDialog(&mDB);
 
 //    mDialog->exec();
+}
+
+
+void MainWindow::on_actionStok_Birimleri_triggered()
+{
+    auto mDialog = std::make_unique<YeniStokBirimEkleDialog>(&mDB);
+
+    mDialog->exec();
+}
+
+void MainWindow::on_actionStok_Kategorileri_triggered()
+{
+    auto mDialog = std::make_unique<StokKategoriDialog>(&mDB);
+
+    mDialog->exec();
+}
+
+void MainWindow::on_actionStok_Kart_Tan_mla_triggered()
+{
+    auto mDialog = std::make_unique<YeniStokKartDialog>(&mDB);
+
+    mDialog->exec();
 }

@@ -58,6 +58,7 @@
      <string>Stok</string>
     </property>
     <addaction name="actionStok_Kartlar"/>
+    <addaction name="actionStok_Kart_Tan_mla"/>
     <addaction name="actionStok_Birimleri"/>
     <addaction name="actionStok_Kategorileri"/>
    </widget>
@@ -86,6 +87,11 @@
   <action name="actionStok_Kategorileri">
    <property name="text">
     <string>Stok Kategorileri</string>
+   </property>
+  </action>
+  <action name="actionStok_Kart_Tan_mla">
+   <property name="text">
+    <string>Stok Kartı Tanımla</string>
    </property>
   </action>
  </widget>

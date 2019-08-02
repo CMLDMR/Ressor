@@ -22,6 +22,12 @@ private slots:
 
     void on_actionStok_Kartlar_triggered();
 
+    void on_actionStok_Birimleri_triggered();
+
+    void on_actionStok_Kategorileri_triggered();
+
+    void on_actionStok_Kart_Tan_mla_triggered();
+
 private:
     Ui::MainWindow *ui;
 
