@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushButton_StokKaydet_clicked();
 
+    void on_pushButton_YeniKategoriEkle_clicked();
+
 private:
     Ui::YeniStokKartDialog *ui;
 };
