@@ -2,16 +2,24 @@
 #define STOKKART_H
 
 
-#include "mongoheaders.h"
-#include <QString>
+#include "base/dbclass.h"
+#include <boost/optional.hpp>
+
+class QString;
 
 namespace STOKKARTKEY {
     static const std::string STOKCOLLECTION{"stokkart"};
     static const std::string STOKADI{"stokadı"};
     static const std::string STOKODU{"stokodu"};
+    static const std::string KategoriKEY{"stokKategori"};
+    static const std::string BirimKEY{"stokBirimi"};
+    static const std::string AlisFiyatKEY{"stokAlisFiyati"};
+    static const std::string KdvOraniKEY{"stokKdvOrani"};
+    static const std::string OtvOraniKEY{"stokOtvOrani"};
+    static const std::string SatisFiyatiKEY{"stokSatisFiyati"};
 }
 
-class StokKart
+class StokKart : public DBClass
 {
 public:
 
@@ -20,22 +28,10 @@ public:
     /// \param _collection
     /// \return
     /// StokKart
-    static StokKart Create_StokKart(mongocxx::collection &_collection);
+    static boost::optional<StokKart> Create_StokKart(mongocxx::database *_db);
 
 
-    ///
-    /// \brief Load_StokKart
-    /// \param _collection
-    /// \param kartOid
-    /// \return
-    /// Stok Kartını Verilen ID ile veritabanından Yükler ve verir.
-    static StokKart Load_StokKart(mongocxx::collection &_collection , const bsoncxx::oid &kartOid );
 
-    ///
-    /// \brief StokKartDocument
-    /// \return
-    /// StokKartını BSON document olarak döndürür.
-    const document StokKartDocument();
 
     ///
     /// \brief stokKartOid
@@ -43,11 +39,6 @@ public:
     /// Stok Kart ID
     bsoncxx::oid stokKartOid() const;
 
-    ///
-    /// \brief setStokKartOid
-    /// \param stokKartOid
-    /// Stok Kart ID Degistirir
-    void setStokKartOid(const bsoncxx::oid &stokKartOid);
 
 
 
@@ -69,7 +60,7 @@ public:
     /// \brief StokKodu: Stok Kodu Veri Tabanından Geri Döndürür.
     /// \return
     /// "QString"
-    QString StokKodu();
+    QString StokKodu() const;
 
     ///
     /// \brief setStokKodu: Stok Kodunu Veri Tabanında Set Eder.
@@ -78,40 +69,44 @@ public:
     /// Kayıt Başarılı ise "true" yoksa "false" döndürür.
     bool setStokKodu( const QString &stokKodu);
 
+    bool setKategori( const QString &stokKategori );
+    QString Kategori() const;
+
+    bool setBirim( const QString &birim );
+    const QString Birimi() const;
+
+    bool setAlisFiyati(const double &alisfiyati);
+    double AlisFiyati() const;
+
+    bool setKDVOrani( const double &kdvOrani );
+    double KDVOrani() const;
+
+    bool setOTVOrani( const double &otvOrani );
+    double OTVOrani() const;
+
+    bool setSatisFiyati( const double &satisFiyati );
+    double SatisFiyati() const;
 
 private:
-    ///
-    /// \brief StokKart
-    /// \param _collection
-    /// StokKart Yapıcı Fonksiyon
-    StokKart(mongocxx::collection &_collection);
+    StokKart(mongocxx::database *_db);
 
-    ///
-    /// \brief StokKart
-    /// \param _collection
-    /// \param kartOid
-    /// Stok Kartını kartOid ile Yükler ve Verir.
-    StokKart(mongocxx::collection &_collection , const bsoncxx::oid &kartOid);
-
-
-    ///
-    /// \brief collection
-    /// Veri Tabanı Bağlı Koleksiyon
-    mongocxx::collection& collection;
+    std::unique_ptr<std::string> mStokKodu;
+    std::unique_ptr<std::string> mKartAdi;
+    std::unique_ptr<std::string> mKategori;
+    std::unique_ptr<std::string> mBirim;
+    std::unique_ptr<double> mAlisFiyati;
+    std::unique_ptr<double> mKDVOrani;
+    std::unique_ptr<double> mOTVOrani;
+    std::unique_ptr<double> mSatisFiyati;
 
 
 
-    ///
-    /// \brief mStokKartOid
-    /// Veri Tabanında ki StokKartın Adı.
     bsoncxx::oid mStokKartOid;
 
-
-    ///
-    /// \brief filterByOid
-    /// \return
-    /// Stok Kart için ID filtresini Geri Döndürür.
     document filterByOid();
+
+
+    bool isValid;
 };
 
 #endif // STOKKART_H

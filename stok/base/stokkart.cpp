@@ -1,58 +1,48 @@
 #include "stokkart.h"
 
-StokKart StokKart::Create_StokKart(mongocxx::collection &_collection)
+
+#include <QString>
+
+boost::optional<StokKart> StokKart::Create_StokKart(mongocxx::database *_db)
 {
-    StokKart kart(_collection);
-    return kart;
-}
-
-StokKart StokKart::Load_StokKart(mongocxx::collection &_collection, const bsoncxx::oid &kartOid)
-{
-    StokKart kart(_collection,kartOid);
-    return kart;
-}
-
-const bsoncxx::builder::basic::document StokKart::StokKartDocument()
-{
-
-    auto rDoc = document{};
-
-    try {
-        rDoc.append(kvp(STOKKARTKEY::STOKADI,this->KartAdi().toStdString()));
-    } catch (bsoncxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-
+    StokKart kart(_db);
+    if( kart.isValid )
+    {
+        return std::move(kart);
+    }else{
+        boost::none;
     }
-
-
-
-    return rDoc;
 }
 
-StokKart::StokKart(mongocxx::collection &_collection)
-    :collection(_collection)
+
+
+
+
+StokKart::StokKart(mongocxx::database *_db)
+    :DBClass(_db)
 {
     try {
-        auto ins = this->collection.insert_one(document{}.view());
+        auto ins = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).insert_one(document{}.view());
 
         if( ins.has_value() )
         {
             try {
-                this->setStokKartOid(ins.value().inserted_id().get_oid().value);
+                this->mStokKartOid = ins.value().inserted_id().get_oid().value;
+                isValid = true;
             } catch (bsoncxx::exception &e) {
                 std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+                isValid = false;
             }
+        }else{
+            isValid = false;
         }
     } catch (mongocxx::exception &e) {
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
     }
 }
 
-StokKart::StokKart(mongocxx::collection &_collection, const bsoncxx::oid &kartOid)
-    :collection(_collection)
-{
-    this->setStokKartOid(kartOid);
-}
+
 
 bsoncxx::builder::basic::document StokKart::filterByOid()
 {
@@ -72,56 +62,22 @@ bsoncxx::oid StokKart::stokKartOid() const
     return mStokKartOid;
 }
 
-void StokKart::setStokKartOid(const bsoncxx::oid &stokKartOid)
-{
-    mStokKartOid = stokKartOid;
-}
-
 QString StokKart::KartAdi()
 {
-
-    mongocxx::options::find findOptions;
-
-
-    auto project = document{};
-
-    try {
-        project.append(kvp(STOKKARTKEY::STOKADI,true));
-    } catch (bsoncxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-    }
-
-
-    findOptions.projection(project.view());
-
-
-    try {
-        auto val = this->collection.find_one(this->filterByOid().view(),findOptions);
-
-        if( val.has_value() )
-        {
-            try {
-                return QString::fromStdString(val.value().view()[STOKKARTKEY::STOKADI].get_utf8().value.to_string());
-            } catch (bsoncxx::exception &e) {
-                std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-                return QString();
-            }
-        }else{
-            return QString();
-        }
-
-    } catch (mongocxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-        return QString();
-    }
-
-
-
-
+    return mKartAdi.get()->c_str();
 }
 
 bool StokKart::setKartAdi(const QString &kartAdi)
 {
+    if( mKartAdi )
+    {
+        if( kartAdi.toStdString() == (mKartAdi.get()->c_str()) )
+        {
+            return true;
+        }
+    }
+
+
     auto setDoc = document{};
 
 
@@ -134,12 +90,13 @@ bool StokKart::setKartAdi(const QString &kartAdi)
 
 
     try {
-        auto upt = this->collection.update_one(this->filterByOid().view(),setDoc.view());
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
 
         if( upt.has_value() )
         {
             if( upt.value().modified_count() )
             {
+                this->mKartAdi = std::make_unique<std::string>(kartAdi.toStdString());
                 return true;
             }else{
                 return false;
@@ -154,46 +111,30 @@ bool StokKart::setKartAdi(const QString &kartAdi)
     }
 }
 
-QString StokKart::StokKodu()
+QString StokKart::StokKodu() const
 {
-    mongocxx::options::find findOptions;
-
-
-    auto project = document{};
-
-    try {
-        project.append(kvp(STOKKARTKEY::STOKODU,true));
-    } catch (bsoncxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-    }
-
-
-    findOptions.projection(project.view());
-
-
-    try {
-        auto val = this->collection.find_one(this->filterByOid().view(),findOptions);
-
-        if( val.has_value() )
-        {
-            try {
-                return QString::fromStdString(val.value().view()[STOKKARTKEY::STOKODU].get_utf8().value.to_string());
-            } catch (bsoncxx::exception &e) {
-                std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-                return QString();
-            }
-        }else{
-            return QString();
-        }
-
-    } catch (mongocxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+    if( mStokKodu )
+    {
+        return mStokKodu->c_str();
+    }else{
         return QString();
     }
+
 }
 
 bool StokKart::setStokKodu(const QString &stokKodu)
 {
+
+    if( mStokKodu )
+    {
+        if( stokKodu == QString::fromStdString(mStokKodu.get()->c_str()) )
+        {
+            return true;
+        }
+    }
+
+
+
     auto setDoc = document{};
 
 
@@ -206,12 +147,13 @@ bool StokKart::setStokKodu(const QString &stokKodu)
 
 
     try {
-        auto upt = this->collection.update_one(this->filterByOid().view(),setDoc.view());
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
 
         if( upt.has_value() )
         {
             if( upt.value().modified_count() )
             {
+                this->mStokKodu = std::make_unique<std::string>(stokKodu.toStdString());
                 return true;
             }else{
                 return false;
@@ -225,3 +167,325 @@ bool StokKart::setStokKodu(const QString &stokKodu)
         return false;
     }
 }
+
+bool StokKart::setKategori(const QString &stokKategori)
+{
+    if( mKategori )
+    {
+        if( mKategori.get()->c_str() == stokKategori )
+        {
+            return true;
+        }
+    }
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::KategoriKEY,stokKategori.toStdString()))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                this->mKategori = std::make_unique<std::string>(stokKategori.toStdString());
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+QString StokKart::Kategori() const
+{
+    if( this->mKategori )
+    {
+        return this->mKategori.get()->c_str();
+    }else{
+        return QString();
+    }
+}
+
+bool StokKart::setBirim(const QString &birim)
+{
+    if( mBirim )
+    {
+        if( mBirim.get()->c_str() == birim )
+        {
+            return true;
+        }
+    }
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::BirimKEY,birim.toStdString()))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                this->mBirim = std::make_unique<std::string>(birim.toStdString());
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+const QString StokKart::Birimi() const
+{
+    if( mBirim )
+    {
+        return mBirim.get()->c_str();
+    }else{
+        return QString();
+    }
+}
+
+bool StokKart::setAlisFiyati(const double &alisfiyati)
+{
+
+    if( mAlisFiyati )
+    {
+        if( *mAlisFiyati.get() == alisfiyati )
+        {
+            return true;
+        }
+    }
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::AlisFiyatKEY,alisfiyati))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                this->mAlisFiyati = std::make_unique<double>(alisfiyati);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+double StokKart::AlisFiyati() const
+{
+    if( mAlisFiyati )
+    {
+        return *mAlisFiyati.get();
+    }else{
+        return 0.0;
+    }
+}
+
+bool StokKart::setKDVOrani(const double &kdvOrani)
+{
+//    KdvOraniKEY
+    if( mKDVOrani )
+    {
+        if( *mKDVOrani.get() == kdvOrani )
+        {
+            return true;
+        }
+    }
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::KdvOraniKEY,kdvOrani))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                this->mKDVOrani = std::make_unique<double>(kdvOrani);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+double StokKart::KDVOrani() const
+{
+    if( mKDVOrani )
+    {
+        return *mKDVOrani.get();
+    }else{
+        return 0.0;
+    }
+}
+
+bool StokKart::setOTVOrani(const double &otvOrani)
+{
+    if( mOTVOrani )
+    {
+        if( *mOTVOrani.get() == otvOrani )
+        {
+            return true;
+        }
+    }
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::OtvOraniKEY,otvOrani))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                this->mOTVOrani = std::make_unique<double>(otvOrani);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+double StokKart::OTVOrani() const
+{
+    if( mOTVOrani )
+    {
+        return *mOTVOrani.get();
+    }else{
+        return 0.0;
+    }
+}
+
+bool StokKart::setSatisFiyati(const double &satisFiyati)
+{
+    if( mSatisFiyati )
+    {
+        if( *mSatisFiyati.get() == satisFiyati )
+        {
+            return true;
+        }
+    }
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::SatisFiyatiKEY,satisFiyati))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                this->mSatisFiyati = std::make_unique<double>(satisFiyati);
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
+double StokKart::SatisFiyati() const
+{
+    if( mSatisFiyati )
+    {
+        return *mSatisFiyati.get();
+    }else{
+        return 0.0;
+    }
+}
+
+
