@@ -11,13 +11,9 @@ YeniStokBirimEkleDialog::YeniStokBirimEkleDialog(mongocxx::database *_db, QWidge
     ui(new Ui::YeniStokBirimEkleDialog)
 {
     ui->setupUi(this);
-
     mModel = new QStandardItemModel();
-
     ui->listView->setModel(mModel);
-
     this->initList();
-
 }
 
 YeniStokBirimEkleDialog::~YeniStokBirimEkleDialog()
@@ -28,11 +24,8 @@ YeniStokBirimEkleDialog::~YeniStokBirimEkleDialog()
 
 void YeniStokBirimEkleDialog::on_pushButton_YeniBirimEkle_clicked()
 {
-
     auto stokBirim = StokBirim::StokBirim::CreateStokBirim(this->db(),ui->lineEdit_YeniBirimAdi->text());
-
     this->initList();
-
 }
 
 void YeniStokBirimEkleDialog::initList()
