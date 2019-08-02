@@ -87,33 +87,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_StokBirimi">
-       <item>
-        <property name="text">
-         <string>Adet</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Kg</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Litre</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Gram</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Ton</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QComboBox" name="comboBox_StokBirimi"/>
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_YeniBirimEkle">
