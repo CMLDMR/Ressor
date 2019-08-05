@@ -6,13 +6,16 @@
 #include <QString>
 #include <QVector>
 #include <QStandardItem>
+#include "base/dbclass.h"
+
+#include <boost/optional.hpp>
 
 namespace STOKKATEGORI {
 
 static const std::string KATEGORICOLLECTION{"stokkategori"};
 static const std::string KATEGORIADI{"stokkategoriadi"};
 
-class StokKategori : public QStandardItem
+class StokKategori : public QStandardItem , public DBClass
 {
 public:
 
@@ -24,7 +27,7 @@ public:
     /// \param kategoriName
     /// \return
     /// StokKategori
-    static StokKategori Create_Kategori(mongocxx::collection *collection, const QString &kategoriName );
+    static boost::optional<StokKategori*> Create_Kategori(mongocxx::database *_db , const QString &kategoriName );
 
 
     ///
@@ -32,7 +35,7 @@ public:
     /// \param collection
     /// \return
     /// QVector<StokKategori>
-    static QVector<StokKategori*> GetKategoriList(mongocxx::collection *collection);
+    static QVector<boost::optional<StokKategori*>> GetKategoriList(mongocxx::database *_db);
 
     ///
     /// \brief DeleteKategori: Veritabanından oid IDli kategoriyi siler
@@ -40,7 +43,7 @@ public:
     /// \param oid
     /// \return
     /// Başarılı ise true yoksa false döndürür.
-    static bool DeleteKategori(mongocxx::collection *collection , const bsoncxx::oid &oid);
+    static bool DeleteKategori(mongocxx::database *_db , const bsoncxx::oid &oid);
 
     ///
     /// \brief DeleteKategori: Veritabanından kategoriName adlı kategoriyi siler
@@ -48,7 +51,7 @@ public:
     /// \param kategoriName
     /// \return
     /// Başarılı ise true yoksa false döndürür.
-    static bool DeleteKategori(mongocxx::collection *collection , const QString &kategoriName );
+    static bool DeleteKategori(mongocxx::database *_db , const QString &kategoriName );
 
     ///
     /// \brief setKategoriOid: Kategori item ID Set Eder.
@@ -82,11 +85,15 @@ public:
     bool Deletekategori();
 
 private:
-    StokKategori(mongocxx::collection* collection);
-    StokKategori(mongocxx::collection* collection,const QString &kategoriName);
-    StokKategori(mongocxx::collection* collection , const bsoncxx::oid &oid);
+    StokKategori(mongocxx::database *_db);
+    StokKategori(mongocxx::database *_db, const QString &kategoriName);
+    StokKategori(mongocxx::database *_db , const bsoncxx::document::view &view);
+
+    std::unique_ptr<std::string> mKategoriAdi;
 
     mongocxx::collection* mCollection;
+
+
 
     bsoncxx::oid mKategoriOid;
 
