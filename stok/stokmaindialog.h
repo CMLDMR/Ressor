@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "base/dbclass.h"
 
+class StokKartModel;
+
 namespace Ui {
 class StokMainDialog;
 }
@@ -20,8 +22,12 @@ private slots:
 
     void on_pushButton_StokKartTanimla_clicked();
 
+    void on_pushButton_ListeyiGuncelle_clicked();
+
 private:
     Ui::StokMainDialog *ui;
+
+    StokKartModel* mkartModel;
 };
 
 #endif // STOKMAINDIALOG_H
