@@ -4,8 +4,9 @@
 
 #include "base/dbclass.h"
 #include <boost/optional.hpp>
-
+#include <QVector>
 class QString;
+
 
 namespace STOKKARTKEY {
     static const std::string STOKCOLLECTION{"stokkart"};
@@ -31,7 +32,7 @@ public:
     static boost::optional<StokKart> Create_StokKart(mongocxx::database *_db);
 
 
-
+    static QVector<boost::optional<StokKart*>> GetList( mongocxx::database* _db );
 
     ///
     /// \brief stokKartOid
@@ -39,14 +40,11 @@ public:
     /// Stok Kart ID
     bsoncxx::oid stokKartOid() const;
 
-
-
-
     ///
     /// \brief KartAdi
     /// \return
     /// Stok Adı Verir.
-    QString KartAdi();
+    QString KartAdi() const;
 
     ///
     /// \brief setKartAdi
@@ -54,7 +52,6 @@ public:
     /// \return
     /// Stok Kart Adını Veri Tabanın da Değiştirir.
     bool setKartAdi(const QString &kartAdi);
-
 
     ///
     /// \brief StokKodu: Stok Kodu Veri Tabanından Geri Döndürür.
@@ -88,7 +85,10 @@ public:
     double SatisFiyati() const;
 
 private:
-    StokKart(mongocxx::database *_db);
+    explicit StokKart(mongocxx::database *_db);
+    StokKart(mongocxx::database* _db , const bsoncxx::document::view &view);
+
+
 
     std::unique_ptr<std::string> mStokKodu;
     std::unique_ptr<std::string> mKartAdi;

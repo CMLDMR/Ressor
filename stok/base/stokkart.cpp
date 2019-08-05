@@ -14,6 +14,36 @@ boost::optional<StokKart> StokKart::Create_StokKart(mongocxx::database *_db)
     }
 }
 
+QVector<boost::optional<StokKart *> > StokKart::GetList(mongocxx::database *_db)
+{
+
+    QVector<boost::optional<StokKart*>> list;
+
+
+
+    try {
+        auto cursor = _db->collection(STOKKARTKEY::STOKCOLLECTION).find(document{}.view());
+
+        for( auto doc : cursor )
+        {
+            auto item = new StokKart(_db,doc);
+            if( item->isValid )
+            {
+                list.push_back(item);
+            }
+        }
+
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+
+    }
+
+
+    return list;
+
+}
+
 
 
 
@@ -42,6 +72,86 @@ StokKart::StokKart(mongocxx::database *_db)
     }
 }
 
+StokKart::StokKart(mongocxx::database *_db, const bsoncxx::document::view &view)
+    :DBClass (_db)
+{
+
+    try {
+        this->mStokKodu = std::make_unique<std::string>(view[STOKKARTKEY::STOKODU].get_utf8().value.to_string());
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mKartAdi = std::make_unique<std::string>(view[STOKKARTKEY::STOKADI].get_utf8().value.to_string());
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mKategori = std::make_unique<std::string>(view[STOKKARTKEY::KategoriKEY].get_utf8().value.to_string());
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mBirim = std::make_unique<std::string>(view[STOKKARTKEY::BirimKEY].get_utf8().value.to_string());
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mAlisFiyati = std::make_unique<double>(view[STOKKARTKEY::AlisFiyatKEY].get_double().value);
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mKDVOrani = std::make_unique<double>(view[STOKKARTKEY::KdvOraniKEY].get_double().value);
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+
+    try {
+        this->mOTVOrani = std::make_unique<double>(view[STOKKARTKEY::OtvOraniKEY].get_double().value);
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mSatisFiyati = std::make_unique<double>(view[STOKKARTKEY::SatisFiyatiKEY].get_double().value);
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    try {
+        this->mStokKartOid = view["_id"].get_oid().value;
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        isValid = false;
+        return;
+    }
+
+    isValid = true;
+}
+
 
 
 bsoncxx::builder::basic::document StokKart::filterByOid()
@@ -62,9 +172,14 @@ bsoncxx::oid StokKart::stokKartOid() const
     return mStokKartOid;
 }
 
-QString StokKart::KartAdi()
+QString StokKart::KartAdi() const
 {
-    return mKartAdi.get()->c_str();
+    if( mKartAdi )
+    {
+        return mKartAdi.get()->c_str();
+    }else{
+        return QString();
+    }
 }
 
 bool StokKart::setKartAdi(const QString &kartAdi)
