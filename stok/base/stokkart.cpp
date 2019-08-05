@@ -90,6 +90,7 @@ bool StokKart::setKartAdi(const QString &kartAdi)
 
 
     try {
+
         auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
 
         if( upt.has_value() )
@@ -445,35 +446,11 @@ bool StokKart::setSatisFiyati(const double &satisFiyati)
         }
     }
 
-    auto setDoc = document{};
 
-
-    try {
-        setDoc.append(kvp("$set",make_document(kvp(STOKKARTKEY::SatisFiyatiKEY,satisFiyati))));
-    } catch (bsoncxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-        return false;
-    }
-
-
-    try {
-        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
-
-        if( upt.has_value() )
-        {
-            if( upt.value().modified_count() )
-            {
-                this->mSatisFiyati = std::make_unique<double>(satisFiyati);
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
-
-    } catch (mongocxx::exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+    if( this->setElement(STOKKARTKEY::SatisFiyatiKEY,satisFiyati) ){
+        this->mSatisFiyati = std::make_unique<double>(satisFiyati);
+        return true;
+    }else{
         return false;
     }
 }
@@ -489,3 +466,41 @@ double StokKart::SatisFiyati() const
 }
 
 
+
+template<typename T>
+bool StokKart::setElement(const std::string &key, const T &value)
+{
+
+    auto setDoc = document{};
+
+
+    try {
+        setDoc.append(kvp("$set",make_document(kvp(key,value))));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+    try {
+        auto upt = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).update_one(this->filterByOid().view(),setDoc.view());
+
+        if( upt.has_value() )
+        {
+            if( upt.value().modified_count() )
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+
+
+}

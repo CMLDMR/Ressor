@@ -107,6 +107,9 @@ private:
 
 
     bool isValid;
+
+    template<typename T>
+    bool setElement( const std::string &key , const T &value );
 };
 
 #endif // STOKKART_H
