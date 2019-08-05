@@ -21,11 +21,11 @@ YeniStokKartDialog::YeniStokKartDialog(mongocxx::database *_db, QWidget *parent)
 
 
 
-    auto KatList = STOKKATEGORI::StokKategori::GetKategoriList(&mKategoriCollection);
+    auto KatList = STOKKATEGORI::StokKategori::GetKategoriList(this->db());
     ui->comboBox_StokKategori->clear();
     for( auto doc : KatList )
     {
-        ui->comboBox_StokKategori->addItem(doc->KategoriAdi(),doc->kategoriOid().to_string().c_str());
+        ui->comboBox_StokKategori->addItem(doc.value()->KategoriAdi(),doc.value()->kategoriOid().to_string().c_str());
     }
 
 

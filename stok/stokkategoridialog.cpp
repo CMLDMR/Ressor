@@ -26,7 +26,7 @@ StokKategoriDialog::~StokKategoriDialog()
 void StokKategoriDialog::on_pushButton_YeniKaydet_clicked()
 {
     auto coll = this->db()->collection(STOKKATEGORI::KATEGORICOLLECTION);
-    auto kat = STOKKATEGORI::StokKategori::Create_Kategori(&coll,ui->lineEdit_YeniStokKategroi->text());
+    auto kat = STOKKATEGORI::StokKategori::Create_Kategori(this->db(),ui->lineEdit_YeniStokKategroi->text());
 
     this->initList();
 }
@@ -35,12 +35,12 @@ void StokKategoriDialog::initList()
 {
 
     auto coll = this->db()->collection(STOKKATEGORI::KATEGORICOLLECTION);
-    auto list = STOKKATEGORI::StokKategori::GetKategoriList(&coll);
+    auto list = STOKKATEGORI::StokKategori::GetKategoriList(this->db());
 
     mKategoriModel->removeRows(0,mKategoriModel->rowCount());
 
     for( auto item : list )
     {
-        mKategoriModel->insertRow(0,item);
+        mKategoriModel->insertRow(0,item.value());
     }
 }
