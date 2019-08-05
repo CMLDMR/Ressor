@@ -19,12 +19,6 @@ StokMainDialog::~StokMainDialog()
     delete ui;
 }
 
-//void StokMainDialog::on_pushButton_STOKKART_clicked()
-//{
-//    auto mDialog = std::make_unique<StokKartDialog>(this->db());
-
-//    mDialog->exec();
-//}
 
 void StokMainDialog::on_pushButton_StokKartTanimla_clicked()
 {
