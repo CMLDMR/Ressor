@@ -30,6 +30,7 @@ SOURCES += \
         mainwindow.cpp \
         stok/base/stokbirim.cpp \
         stok/base/stokkart.cpp \
+        stok/base/stokkartmodel.cpp \
         stok/base/stokkategori.cpp \
         stok/stokkartdialog.cpp \
         stok/stokkategoridialog.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
         mongoheaders.h \
         stok/base/stokbirim.h \
         stok/base/stokkart.h \
+        stok/base/stokkartmodel.h \
         stok/base/stokkategori.h \
         stok/stokkartdialog.h \
         stok/stokkategoridialog.h \
