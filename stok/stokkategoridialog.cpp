@@ -2,6 +2,7 @@
 #include "ui_stokkategoridialog.h"
 #include "base/stokkategori.h"
 #include <QStandardItemModel>
+#include <QMessageBox>
 
 StokKategoriDialog::StokKategoriDialog(mongocxx::database *_db, QWidget *parent) :
     QDialog(parent),
@@ -14,6 +15,10 @@ StokKategoriDialog::StokKategoriDialog(mongocxx::database *_db, QWidget *parent)
     ui->listView_KategoriList->setModel(mKategoriModel);
 
     this->initList();
+
+    connect(ui->pushButton_iptal,&QPushButton::clicked,[=](){
+        this->close();
+    });
 
 }
 
@@ -43,4 +48,50 @@ void StokKategoriDialog::initList()
     {
         mKategoriModel->insertRow(0,item.value());
     }
+}
+
+void StokKategoriDialog::on_pushButton_SeciliSil_clicked()
+{
+
+    QMessageBox msg;
+
+
+    if( ui->listView_KategoriList->selectionModel()->selectedIndexes().count() )
+    {
+
+        auto item = static_cast<STOKKATEGORI::StokKategori*>(mKategoriModel->item(ui->listView_KategoriList->selectionModel()->selectedIndexes().first().row()));
+
+        auto isUsed = item->isUsedInStokKart();
+
+        if( isUsed )
+        {
+            msg.setText(QString("Bu Kategori \"%1\"'de Kullanılıyor").arg(isUsed.value()));
+            msg.setInformativeText("Önce Stok Kart Kategorisini Değiştiriniz");
+            msg.setIcon(QMessageBox::Icon::Warning);
+            msg.setWindowTitle("Bilgi");
+        }else{
+
+            if( item->Deletekategori() )
+            {
+                msg.setText("Kategori Silindi.");
+                msg.setIcon(QMessageBox::Icon::Warning);
+                msg.setWindowTitle("Bilgi");
+                this->initList();
+            }else{
+                msg.setText("Bir Kategori Silinmedi");
+                msg.setIcon(QMessageBox::Icon::Warning);
+                msg.setWindowTitle("Uyarı");
+            }
+
+        }
+
+
+
+    }else{
+        msg.setText("Bir Kategori Seçmediniz");
+        msg.setIcon(QMessageBox::Icon::Warning);
+        msg.setWindowTitle("Uyarı");
+    }
+
+    msg.exec();
 }

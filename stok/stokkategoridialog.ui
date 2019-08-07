@@ -55,5 +55,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_iptal</sender>
+   <signal>clicked()</signal>
+   <receiver>StokKategoriDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>237</x>
+     <y>369</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>263</x>
+     <y>380</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

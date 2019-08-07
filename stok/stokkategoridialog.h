@@ -21,6 +21,8 @@ public:
 private slots:
     void on_pushButton_YeniKaydet_clicked();
 
+    void on_pushButton_SeciliSil_clicked();
+
 private:
     Ui::StokKategoriDialog *ui;
 
