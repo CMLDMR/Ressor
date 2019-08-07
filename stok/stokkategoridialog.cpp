@@ -16,9 +16,8 @@ StokKategoriDialog::StokKategoriDialog(mongocxx::database *_db, QWidget *parent)
 
     this->initList();
 
-    connect(ui->pushButton_iptal,&QPushButton::clicked,[=](){
-        this->close();
-    });
+
+
 
 }
 
