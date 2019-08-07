@@ -191,6 +191,41 @@ bool STOKKATEGORI::StokKategori::Deletekategori()
     }
 }
 
+boost::optional<QString> STOKKATEGORI::StokKategori::isUsedInStokKart()
+{
+
+    auto filter_ = document{};
+
+    try {
+        filter_.append(kvp("stokKategori",*this->mKategoriAdi.get()));
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return boost::none;
+    }
+
+
+    try {
+        auto val = this->db()->collection("stokkart").find_one(filter_.view());
+
+        if( val )
+        {
+            try {
+                return QString::fromStdString(val.value().view()["stokadı"].get_utf8().value.to_string());
+            } catch (bsoncxx::exception &e) {
+                std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+                return boost::none;
+            }
+        }else{
+            return boost::none;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return boost::none;
+    }
+
+}
+
 STOKKATEGORI::StokKategori::StokKategori(mongocxx::database *_db)
     :DBClass (_db)
 {

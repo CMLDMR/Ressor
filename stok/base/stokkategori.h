@@ -84,6 +84,9 @@ public:
     /// Başarılı ise true yoksa false Döndürür.
     bool Deletekategori();
 
+
+    boost::optional<QString> isUsedInStokKart();
+
 private:
     StokKategori(mongocxx::database *_db);
     StokKategori(mongocxx::database *_db, const QString &kategoriName);
