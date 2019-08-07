@@ -18,10 +18,15 @@ public:
     explicit StokKategoriDialog(mongocxx::database* _db , QWidget *parent = nullptr);
     ~StokKategoriDialog();
 
+signals:
+    void Added();
+
 private slots:
     void on_pushButton_YeniKaydet_clicked();
 
     void on_pushButton_SeciliSil_clicked();
+
+    void on_pushButton_iptal_clicked();
 
 private:
     Ui::StokKategoriDialog *ui;
@@ -29,6 +34,9 @@ private:
     QStandardItemModel* mKategoriModel;
 
     void initList();
+
+
+    bool mNewAdded;
 
 
 };

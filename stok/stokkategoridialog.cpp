@@ -16,6 +16,7 @@ StokKategoriDialog::StokKategoriDialog(mongocxx::database *_db, QWidget *parent)
 
     this->initList();
 
+    mNewAdded = false;
 
 
 
@@ -32,7 +33,14 @@ void StokKategoriDialog::on_pushButton_YeniKaydet_clicked()
     auto coll = this->db()->collection(STOKKATEGORI::KATEGORICOLLECTION);
     auto kat = STOKKATEGORI::StokKategori::Create_Kategori(this->db(),ui->lineEdit_YeniStokKategroi->text());
 
+    if( kat )
+    {
+        mNewAdded = true;
+    }
+
     this->initList();
+
+
 }
 
 void StokKategoriDialog::initList()
@@ -93,4 +101,13 @@ void StokKategoriDialog::on_pushButton_SeciliSil_clicked()
     }
 
     msg.exec();
+}
+
+void StokKategoriDialog::on_pushButton_iptal_clicked()
+{
+    if( mNewAdded )
+    {
+        emit Added();
+    }
+    this->close();
 }

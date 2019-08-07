@@ -136,12 +136,23 @@ void YeniStokKartDialog::on_pushButton_YeniKategoriEkle_clicked()
 {
     auto mDialog = std::make_unique<StokKategoriDialog>(this->db());
 
+    connect(mDialog.get(),&StokKategoriDialog::Added,[=](){
+        auto KatList = STOKKATEGORI::StokKategori::GetKategoriList(this->db());
+        ui->comboBox_StokKategori->clear();
+        for( auto doc : KatList )
+        {
+            ui->comboBox_StokKategori->addItem(doc.value()->KategoriAdi(),doc.value()->kategoriOid().to_string().c_str());
+        }
+    });
+
     mDialog->exec();
 }
 
 void YeniStokKartDialog::on_pushButton_YeniBirimEkle_clicked()
 {
     auto mDialog = std::make_unique<YeniStokBirimEkleDialog>(this->db());
+
+
 
     mDialog->exec();
 }
