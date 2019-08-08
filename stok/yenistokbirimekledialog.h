@@ -19,10 +19,17 @@ public:
     explicit YeniStokBirimEkleDialog(mongocxx::database* _db , QWidget *parent = nullptr);
     ~YeniStokBirimEkleDialog();
 
+
+signals:
+    void birimListChanged();
+
+
 private slots:
     void on_pushButton_YeniBirimEkle_clicked();
 
     void on_pushButton_deleteSecili_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::YeniStokBirimEkleDialog *ui;
@@ -30,6 +37,8 @@ private:
     QStandardItemModel* mModel;
 
     void initList();
+
+    bool mBirimListChanged;
 };
 
 #endif // YENISTOKBIRIMEKLEDIALOG_H

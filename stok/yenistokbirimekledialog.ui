@@ -71,22 +71,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>YeniStokBirimEkleDialog</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>180</x>
-     <y>389</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>232</x>
-     <y>391</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

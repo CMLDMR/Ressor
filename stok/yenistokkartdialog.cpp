@@ -153,6 +153,16 @@ void YeniStokKartDialog::on_pushButton_YeniBirimEkle_clicked()
     auto mDialog = std::make_unique<YeniStokBirimEkleDialog>(this->db());
 
 
+    connect(mDialog.get(),&YeniStokBirimEkleDialog::birimListChanged,[=](){
+        auto BirList = StokBirim::StokBirim::GetStokBirimList(this->db());
+
+        ui->comboBox_StokBirimi->clear();
+        for( auto item : BirList )
+        {
+            ui->comboBox_StokBirimi->addItem(item->getBirimAdi(),item->getBirimOid().to_string().c_str());
+        }
+    });
+
 
     mDialog->exec();
 }

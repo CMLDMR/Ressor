@@ -8,12 +8,14 @@
 YeniStokBirimEkleDialog::YeniStokBirimEkleDialog(mongocxx::database *_db, QWidget *parent) :
     QDialog(parent),
     DBClass (_db),
-    ui(new Ui::YeniStokBirimEkleDialog)
+    ui(new Ui::YeniStokBirimEkleDialog),
+    mBirimListChanged(false)
 {
     ui->setupUi(this);
     mModel = new QStandardItemModel();
     ui->listView->setModel(mModel);
     this->initList();
+
 }
 
 YeniStokBirimEkleDialog::~YeniStokBirimEkleDialog()
@@ -25,7 +27,13 @@ YeniStokBirimEkleDialog::~YeniStokBirimEkleDialog()
 void YeniStokBirimEkleDialog::on_pushButton_YeniBirimEkle_clicked()
 {
     auto stokBirim = StokBirim::StokBirim::CreateStokBirim(this->db(),ui->lineEdit_YeniBirimAdi->text());
-    this->initList();
+
+    if( stokBirim.value().getBirimOid().to_string().c_str() ){
+        this->initList();
+        mBirimListChanged = true;
+    }
+
+
 }
 
 void YeniStokBirimEkleDialog::initList()
@@ -46,8 +54,19 @@ void YeniStokBirimEkleDialog::on_pushButton_deleteSecili_clicked()
     {
         if( StokBirim::StokBirim::deleteBirim(this->db(),bsoncxx::oid{item.data(Qt::UserRole+1).toString().toStdString()}))
         {
+            mBirimListChanged = true;
             this->initList();
             break;
         }
     }
+}
+
+void YeniStokBirimEkleDialog::on_pushButton_2_clicked()
+{
+    if( mBirimListChanged )
+    {
+        emit birimListChanged();
+    }
+
+    this->close();
 }
