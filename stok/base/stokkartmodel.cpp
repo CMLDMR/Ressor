@@ -30,15 +30,31 @@ void StokKartModel::initStokKartList()
     }
 }
 
-void StokKartModel::insert(int row, const StokKart *kart)
+void StokKartModel::insert(int row, StokKart *kart)
 {
-    stokList[row] = kart;
-    this->setItem(row,0,new QStandardItem(kart->KartAdi()));
-    this->setItem(row,1,new QStandardItem(kart->StokKodu()));
-    this->setItem(row,2,new QStandardItem(kart->Kategori()));
-    this->setItem(row,3,new QStandardItem(kart->Birimi()));
-    this->setItem(row,4,new QStandardItem(QString("%1 ₺").arg(kart->AlisFiyati())));
-    this->setItem(row,5,new QStandardItem(QString("%%1").arg(kart->KDVOrani())));
-    this->setItem(row,6,new QStandardItem(QString("%%1").arg(kart->OTVOrani())));
-    this->setItem(row,7,new QStandardItem(QString("%1 ₺").arg(kart->SatisFiyati())));
+    this->setItem(stokList.count(),0,new QStandardItem(kart->KartAdi()));
+    this->setItem(stokList.count(),1,new QStandardItem(kart->StokKodu()));
+    this->setItem(stokList.count(),2,new QStandardItem(kart->Kategori()));
+    this->setItem(stokList.count(),3,new QStandardItem(kart->Birimi()));
+    this->setItem(stokList.count(),4,new QStandardItem(QString("%1 ₺").arg(kart->AlisFiyati())));
+    this->setItem(stokList.count(),5,new QStandardItem(QString("%%1").arg(kart->KDVOrani())));
+    this->setItem(stokList.count(),6,new QStandardItem(QString("%%1").arg(kart->OTVOrani())));
+    this->setItem(stokList.count(),7,new QStandardItem(QString("%1 ₺").arg(kart->SatisFiyati())));
+    stokList.push_back(kart);
+
+}
+
+bool StokKartModel::deleteStokKart(const int &row)
+{
+    std::cout << __LINE__ << " Remove ROW: " << row << std::endl ;
+    auto kart = stokList[row];
+    if( kart->deleteStokKart() )
+    {
+        this->removeRow(row);
+        stokList.removeAt(row);
+        return true;
+    }
+    std::cout << __LINE__ << " Last Row Count: " << stokList.count() << std::endl ;
+
+    return false;
 }
