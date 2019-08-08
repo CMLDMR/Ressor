@@ -59,10 +59,6 @@ void MainWindow::on_actionStok_Kartlar_triggered()
     ui->tabWidget->insertTab(ui->tabWidget->count(),new StokMainDialog(&mDB),"Stok Kart Tanımlama");
 
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
-
-//    auto mDialog = new StokMainDialog(&mDB);
-
-//    mDialog->exec();
 }
 
 
@@ -85,4 +81,11 @@ void MainWindow::on_actionStok_Kart_Tan_mla_triggered()
     auto mDialog = std::make_unique<YeniStokKartDialog>(&mDB);
 
     mDialog->exec();
+}
+
+void MainWindow::on_tabWidget_tabCloseRequested(int index)
+{
+    auto widget = ui->tabWidget->widget(index);
+    ui->tabWidget->removeTab(index);
+    widget->deleteLater();
 }

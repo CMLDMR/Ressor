@@ -28,6 +28,8 @@ private slots:
 
     void on_actionStok_Kart_Tan_mla_triggered();
 
+    void on_tabWidget_tabCloseRequested(int index);
+
 private:
     Ui::MainWindow *ui;
 
