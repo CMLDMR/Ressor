@@ -3,6 +3,7 @@
 
 #include "stok/yenistokkartdialog.h"
 
+
 StokKartDialog::StokKartDialog(mongocxx::database* _db , QWidget *parent) :
     QDialog(parent),
     ui(new Ui::StokKartDialog),
@@ -23,3 +24,4 @@ void StokKartDialog::on_pushButton_YENISTOKKART_clicked()
 
     mDialog->exec();
 }
+

@@ -24,10 +24,19 @@ private slots:
 
     void on_pushButton_ListeyiGuncelle_clicked();
 
+    void on_tableView_StokKartView_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::StokMainDialog *ui;
 
     StokKartModel* mkartModel;
+
+    void initActions();
+    QAction *aDeleteStokKart;
+
+
+private:
+    void deleteSelectedKart();
 };
 
 #endif // STOKMAINDIALOG_H
