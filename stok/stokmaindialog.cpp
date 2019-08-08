@@ -4,6 +4,7 @@
 #include "stokkartdialog.h"
 #include "yenistokkartdialog.h"
 #include "base/stokkartmodel.h"
+#include "base/stokkart.h"
 
 
 #include <QAction>
@@ -49,6 +50,7 @@ void StokMainDialog::on_tableView_StokKartView_customContextMenuRequested(const 
 {
     QMenu menu;
     menu.addAction(aDeleteStokKart);
+    menu.addAction(aUpdateStokKart);
     menu.exec(ui->tableView_StokKartView->mapToGlobal(pos));
 }
 
@@ -56,6 +58,27 @@ void StokMainDialog::initActions()
 {
     aDeleteStokKart = new QAction("Stok Kartı Sil");
     connect(aDeleteStokKart,&QAction::triggered,this,&StokMainDialog::deleteSelectedKart);
+
+    aUpdateStokKart = new QAction("Stok Kartı Güncelle");
+    connect(aUpdateStokKart,&QAction::triggered,[=](){
+
+
+        int selectedIndex = -1;
+        for( auto index : ui->tableView_StokKartView->selectionModel()->selectedIndexes() ){
+            selectedIndex = index.row();
+        }
+
+        if( selectedIndex != -1 )
+        {
+            auto stokKart = this->mkartModel->stokKart(selectedIndex);
+
+            std::cout << stokKart->KartAdi().toStdString() << std::endl;
+
+            auto mDialog = std::make_unique<YeniStokKartDialog>(this->db(),stokKart);
+
+            mDialog->exec();
+        }
+    });
 
 }
 

@@ -33,6 +33,7 @@ private:
 
     void initActions();
     QAction *aDeleteStokKart;
+    QAction* aUpdateStokKart;
 
 
 private:
