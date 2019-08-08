@@ -172,6 +172,29 @@ bsoncxx::oid StokKart::stokKartOid() const
     return mStokKartOid;
 }
 
+bool StokKart::deleteStokKart()
+{
+    try {
+        auto del = this->db()->collection(STOKKARTKEY::STOKCOLLECTION).delete_one(this->filterByOid().view());
+
+        if( del )
+        {
+            if( del.value().deleted_count() )
+            {
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    } catch (mongocxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        return false;
+    }
+}
+
 QString StokKart::KartAdi() const
 {
     if( mKartAdi )

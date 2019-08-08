@@ -40,6 +40,9 @@ public:
     /// Stok Kart ID
     bsoncxx::oid stokKartOid() const;
 
+
+    bool deleteStokKart();
+
     ///
     /// \brief KartAdi
     /// \return
