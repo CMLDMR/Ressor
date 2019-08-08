@@ -14,11 +14,12 @@ public:
 
 
     void initStokKartList();
-    void insert(int row , const StokKart *kart);
+    void insert(int row , StokKart *kart);
+    bool deleteStokKart( const int &row );
 
 
 private:
-    QHash<int,const StokKart*> stokList;
+    QVector<StokKart*> stokList;
 };
 
 #endif // STOKKARTMODEL_H
