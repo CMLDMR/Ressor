@@ -46,7 +46,6 @@ void StokKartModel::insert(int row, StokKart *kart)
 
 bool StokKartModel::deleteStokKart(const int &row)
 {
-    std::cout << __LINE__ << " Remove ROW: " << row << std::endl ;
     auto kart = stokList[row];
     if( kart->deleteStokKart() )
     {
@@ -54,7 +53,11 @@ bool StokKartModel::deleteStokKart(const int &row)
         stokList.removeAt(row);
         return true;
     }
-    std::cout << __LINE__ << " Last Row Count: " << stokList.count() << std::endl ;
 
     return false;
+}
+
+StokKart *StokKartModel::stokKart( const int &index)
+{
+    return stokList[index];
 }

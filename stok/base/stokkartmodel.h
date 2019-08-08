@@ -17,6 +17,8 @@ public:
     void insert(int row , StokKart *kart);
     bool deleteStokKart( const int &row );
 
+    StokKart* stokKart(const int &index);
+
 
 private:
     QVector<StokKart*> stokList;
