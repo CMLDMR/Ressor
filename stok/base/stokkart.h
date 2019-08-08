@@ -32,6 +32,10 @@ public:
     static boost::optional<StokKart> Create_StokKart(mongocxx::database *_db);
 
 
+
+    static boost::optional<StokKart> Load_StokKart(mongocxx::database* _db , const bsoncxx::oid &oid);
+
+
     static QVector<boost::optional<StokKart*>> GetList( mongocxx::database* _db );
 
     ///
@@ -90,6 +94,7 @@ public:
 private:
     explicit StokKart(mongocxx::database *_db);
     StokKart(mongocxx::database* _db , const bsoncxx::document::view &view);
+    StokKart(mongocxx::database* _db , const bsoncxx::oid &oid );
 
 
 
