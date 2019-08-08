@@ -3,6 +3,9 @@
 
 #include <QDialog>
 #include "base/dbclass.h"
+
+class StokKart;
+
 namespace Ui {
 class YeniStokKartDialog;
 }
@@ -13,6 +16,7 @@ class YeniStokKartDialog : public QDialog , public DBClass
 
 public:
     explicit YeniStokKartDialog(mongocxx::database* _db , QWidget *parent = nullptr);
+    YeniStokKartDialog(mongocxx::database *_db, StokKart* mStokKart);
     ~YeniStokKartDialog();
 
 private slots:
@@ -26,7 +30,14 @@ private:
     Ui::YeniStokKartDialog *ui;
 
 
+    StokKart* mCurrentStokKart;
+
     mongocxx::collection mKategoriCollection;
+
+    bool mYeniEkle;
+
+    void YeniKaydet();
+    void Guncelle();
 };
 
 #endif // YENISTOKKARTDIALOG_H
