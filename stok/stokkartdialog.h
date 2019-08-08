@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "base/dbclass.h"
 
+class QAction;
+
 namespace Ui {
 class StokKartDialog;
 }
@@ -21,6 +23,8 @@ private slots:
 
 private:
     Ui::StokKartDialog *ui;
+
+
 };
 
 #endif // STOKKARTDIALOG_H
