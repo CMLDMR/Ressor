@@ -30,6 +30,8 @@ private slots:
 
     void on_tabWidget_tabCloseRequested(int index);
 
+    void on_actionCari_Hesaplar_triggered();
+
 private:
     Ui::MainWindow *ui;
 

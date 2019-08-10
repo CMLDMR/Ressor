@@ -9,6 +9,8 @@
 #include "stok/stokkategoridialog.h"
 #include "stok/yenistokkartdialog.h"
 
+#include "cari/carimainwidget.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -23,26 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
     }
 
-
     mDB = mClient->database("Ressor");
-
-//    mClient->database("Ressor").collection("Test").insert_one(make_document(kvp("test333","test1")).view());
-
-
-
-//    try {
-//        auto cursor = mClient->database("Ressor").collection("Test").find(document{}.view());
-
-//        for( auto doc : cursor )
-//        {
-//            std::cout << bsoncxx::to_json(doc) << std::endl;
-//        }
-
-//    } catch (mongocxx::exception &e) {
-
-//    }
-
-
 
 }
 
@@ -88,4 +71,9 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
     auto widget = ui->tabWidget->widget(index);
     ui->tabWidget->removeTab(index);
     widget->deleteLater();
+}
+
+void MainWindow::on_actionCari_Hesaplar_triggered()
+{
+
 }
