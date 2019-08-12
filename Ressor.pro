@@ -27,6 +27,7 @@ CONFIG += c++14
 SOURCES += \
         base/dbclass.cpp \
         cari/carimainwidget.cpp \
+        cari/yenicariekledialog.cpp \
         main.cpp \
         mainwindow.cpp \
         stok/base/stokbirim.cpp \
@@ -42,6 +43,7 @@ SOURCES += \
 HEADERS += \
         base/dbclass.h \
         cari/carimainwidget.h \
+        cari/yenicariekledialog.h \
         mainwindow.h \
         mongoheaders.h \
         stok/base/stokbirim.h \
@@ -56,6 +58,7 @@ HEADERS += \
 
 FORMS += \
         cari/carimainwidget.ui \
+        cari/yenicariekledialog.ui \
         mainwindow.ui \
         stok/stokkartdialog.ui \
         stok/stokkategoridialog.ui \
