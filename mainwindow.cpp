@@ -75,5 +75,7 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
 
 void MainWindow::on_actionCari_Hesaplar_triggered()
 {
+    ui->tabWidget->insertTab(ui->tabWidget->count(),new CariMainWidget(&mDB),"Cari Hesaplar");
 
+    ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 }
