@@ -2,11 +2,13 @@
 #define DBCLASS_H
 
 #include "mongoheaders.h"
+#include <boost/optional.hpp>
 
 class DBClass
 {
 public:
-    DBClass(mongocxx::database* _db);
+    explicit DBClass(mongocxx::database* _db);
+    DBClass( const DBClass &dbclass);
 
 
     mongocxx::database* db();
