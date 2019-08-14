@@ -48,8 +48,16 @@ ItemBase::ItemBase(mongocxx::database *_db, const std::string &collection, bsonc
         }
     }
 
+    std::cout << __LINE__ << " " << __FUNCTION__ << " " << bsoncxx::to_json(doc.view()) << std::endl;
+
 
 }
+
+//ItemBase::~ItemBase()
+//{
+
+//    std::cout << "Destructor ItemBase" << std::endl;
+//}
 
 boost::optional<bsoncxx::builder::basic::document> ItemBase::filter()
 {
@@ -78,6 +86,30 @@ bsoncxx::document::view ItemBase::view()
     return this->doc.view();
 }
 
+bool ItemBase::deleteItem()
+{
+    auto _filter = this->filter();
+
+    if( _filter )
+    {
+        try {
+            auto del = this->db()->collection(collectionName).delete_one(_filter.value().view());
+            if( del )
+            {
+                if( del.value().deleted_count() )
+                {
+                    return true;
+                }
+            }
+        } catch (mongocxx::exception &e) {
+            std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
+        }
+    }
+
+    return false;
+
+}
+
 bsoncxx::oid ItemBase::oid() const
 {
     return mOid;
@@ -88,3 +120,10 @@ bool ItemBase::isValid() const
     return mIsValid;
 }
 
+
+bsoncxx::types::value ItemBase::Element(const std::string &key)
+{
+
+    return this->view()[key].get_value();
+
+}

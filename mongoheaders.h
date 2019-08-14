@@ -27,6 +27,7 @@
 #include <mongocxx/pipeline.hpp>
 #include <mongocxx/exception/gridfs_exception.hpp>
 #include <mongocxx/exception/query_exception.hpp>
+#include <mongocxx/options/change_stream.hpp>
 
 
 using bsoncxx::builder::basic::document;

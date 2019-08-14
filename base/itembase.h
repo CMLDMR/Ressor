@@ -11,12 +11,14 @@ public:
     explicit ItemBase(mongocxx::database* _db, const std::string &collection);
     ItemBase(mongocxx::database* _db , const std::string &collection , bsoncxx::document::view &_view);
 
-
+//    virtual ~ItemBase();
 
     template<typename T>
     bool addElement( const std::string &key , const T &value ){
         return this->setElement(key,value);
     }
+
+    bsoncxx::types::value Element( const std::string &key);
 
     bool isValid() const;
 
@@ -28,6 +30,9 @@ public:
     QStringList keyList();
 
     bsoncxx::document::view view();
+
+
+    bool deleteItem();
 
 
 private:

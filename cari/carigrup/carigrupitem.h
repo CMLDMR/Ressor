@@ -21,16 +21,13 @@ public:
 
     static QVector<CariGrupItem*> GetList(mongocxx::database* _db);
 
-    QString grupName() const;
+    QString grupName();
     bool setGrupName(const QString &grupName);
 
 private:
     CariGrupItem(mongocxx::database *_db);
     CariGrupItem(mongocxx::database* _db , bsoncxx::document::view &_view);
 
-    QString mGrupName;
-
-    static bool checkName(mongocxx::database* _db , const QString &grupName );
 };
 
 

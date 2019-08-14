@@ -2,21 +2,18 @@
 
 boost::optional<CariGrub::CariGrupItem> CariGrub::CariGrupItem::Create_CariGrup( mongocxx::database *_db, const QString &cariGrupName )
 {
-    if( checkName(_db,cariGrupName) ){
-        return boost::none;
-    }else{
-        CariGrupItem item(_db);
-        if( item.isValid() )
-        {
-            if( item.setGrupName(cariGrupName) ){
-                std::cout << bsoncxx::to_json(item.view()) << std::endl;
-                return std::move(item);
-            }else{
-                return boost::none;
-            }
+
+    CariGrupItem item(_db);
+    if( item.isValid() )
+    {
+        if( item.setGrupName(cariGrupName) ){
+            std::cout << bsoncxx::to_json(item.view()) << std::endl;
+            return std::move(item);
         }else{
             return boost::none;
         }
+    }else{
+        return boost::none;
     }
 }
 
@@ -30,6 +27,7 @@ QVector<CariGrub::CariGrupItem*> CariGrub::CariGrupItem::GetList(mongocxx::datab
         for( auto doc : cursor )
         {
             CariGrupItem *item = new CariGrupItem(_db,doc);
+            std::cout << __LINE__ << " " << __FUNCTION__ << " " << item->grupName().toStdString() << std::endl;
             list.push_back((item));
         }
 
@@ -53,37 +51,16 @@ CariGrub::CariGrupItem::CariGrupItem(mongocxx::database *_db, bsoncxx::document:
 
 
 
-bool CariGrub::CariGrupItem::checkName(mongocxx::database *_db, const QString &grupName)
-{
-    auto filter_ = document{};
 
+
+QString CariGrub::CariGrupItem::grupName()
+{
     try {
-        filter_.append(kvp(KEY::grupAdi,grupName.toStdString()));
+        return QString::fromStdString(this->Element(KEY::grupAdi).get_utf8().value.to_string());
     } catch (bsoncxx::exception &e) {
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-        return true;
+        return "error";
     }
-
-    try {
-        auto count = _db->collection(KEY::collection).count_documents(filter_.view());
-
-        if( count )
-        {
-            return true;
-        }else{
-            return false;
-        }
-
-    } catch (mongocxx::query_exception &e) {
-        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
-        return true;
-    }
-
-}
-
-QString CariGrub::CariGrupItem::grupName() const
-{
-    return mGrupName;
 }
 
 bool CariGrub::CariGrupItem::setGrupName(const QString &grupName)

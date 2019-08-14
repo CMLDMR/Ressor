@@ -28,6 +28,7 @@ SOURCES += \
         base/dbclass.cpp \
         base/itembase.cpp \
         cari/carigrup/carigrupitem.cpp \
+        cari/carigrup/carigruplistmodel.cpp \
         cari/carimainwidget.cpp \
         cari/yenicariekledialog.cpp \
         cari/yenicarigrupekledialog.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
         base/dbclass.h \
         base/itembase.h \
         cari/carigrup/carigrupitem.h \
+        cari/carigrup/carigruplistmodel.h \
         cari/carimainwidget.h \
         cari/yenicariekledialog.h \
         cari/yenicarigrupekledialog.h \

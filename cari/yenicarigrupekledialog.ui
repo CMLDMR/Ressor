@@ -25,6 +25,13 @@
     <widget class="QListView" name="listView_CariGrupList"/>
    </item>
    <item>
+    <widget class="QPushButton" name="pushButton_deleteSelected">
+     <property name="text">
+      <string>Seçili Sil</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLineEdit" name="lineEdit_YeniCariGrupAdi">
@@ -52,5 +59,22 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_CLose</sender>
+   <signal>clicked()</signal>
+   <receiver>YeniCariGrupEkleDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>373</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>383</x>
+     <y>318</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>
