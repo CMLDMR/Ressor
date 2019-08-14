@@ -22,7 +22,7 @@ public:
         return this->setElement(key,value.toStdString());
     }
 
-    bsoncxx::types::value Element( const std::string &key);
+    boost::optional<bsoncxx::types::value> Element( const std::string &key);
 
     bool isValid() const;
 

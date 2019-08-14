@@ -118,9 +118,14 @@ bool ItemBase::isValid() const
 }
 
 
-bsoncxx::types::value ItemBase::Element(const std::string &key)
+boost::optional<bsoncxx::types::value> ItemBase::Element(const std::string &key)
 {
 
-    return this->view()[key].get_value();
+    try {
+        return this->view()[key].get_value();
+    } catch (bsoncxx::exception &e) {
+        std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " "<<key << ": " << e.what() << std::endl;
+        return boost::none;
+    }
 
 }
