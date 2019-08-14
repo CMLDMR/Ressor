@@ -23,6 +23,8 @@ private slots:
 
     void on_pushButton_KaydetCik_clicked();
 
+    void on_pushButton_Kaydet_clicked();
+
 private:
     Ui::YeniCariEkleDialog *ui;
 
