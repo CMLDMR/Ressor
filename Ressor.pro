@@ -28,6 +28,7 @@ SOURCES += \
         base/dbclass.cpp \
         base/itembase.cpp \
         cari/cariItem/cariitem.cpp \
+        cari/cariItem/cariitemlistmodel.cpp \
         cari/carigrup/carigrupitem.cpp \
         cari/carigrup/carigruplistmodel.cpp \
         cari/carimainwidget.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
         base/dbclass.h \
         base/itembase.h \
         cari/cariItem/cariitem.h \
+        cari/cariItem/cariitemlistmodel.h \
         cari/carigrup/carigrupitem.h \
         cari/carigrup/carigruplistmodel.h \
         cari/carimainwidget.h \
