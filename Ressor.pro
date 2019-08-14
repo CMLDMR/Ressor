@@ -27,6 +27,7 @@ CONFIG += c++14
 SOURCES += \
         base/dbclass.cpp \
         base/itembase.cpp \
+        cari/cariItem/cariitem.cpp \
         cari/carigrup/carigrupitem.cpp \
         cari/carigrup/carigruplistmodel.cpp \
         cari/carimainwidget.cpp \
@@ -47,6 +48,7 @@ SOURCES += \
 HEADERS += \
         base/dbclass.h \
         base/itembase.h \
+        cari/cariItem/cariitem.h \
         cari/carigrup/carigrupitem.h \
         cari/carigrup/carigruplistmodel.h \
         cari/carimainwidget.h \
