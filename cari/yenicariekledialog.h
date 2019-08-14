@@ -21,6 +21,8 @@ public:
 private slots:
     void on_pushButton_CariGrpEkle_clicked();
 
+    void on_pushButton_KaydetCik_clicked();
+
 private:
     Ui::YeniCariEkleDialog *ui;
 
