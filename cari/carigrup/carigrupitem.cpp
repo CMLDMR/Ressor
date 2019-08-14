@@ -54,7 +54,7 @@ CariGrub::CariGrupItem::CariGrupItem(mongocxx::database *_db, bsoncxx::document:
 QString CariGrub::CariGrupItem::grupName()
 {
     try {
-        return QString::fromStdString(this->Element(KEY::grupAdi).get_utf8().value.to_string());
+        return QString::fromStdString(this->Element(KEY::grupAdi)->get_utf8().value.to_string());
     } catch (bsoncxx::exception &e) {
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
         return "error";
