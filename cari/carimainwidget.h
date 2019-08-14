@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "base/dbclass.h"
 
+class CariItemListModel;
 
 namespace Ui {
 class CariMainWidget;
@@ -22,6 +23,8 @@ private slots:
 
 private:
     Ui::CariMainWidget *ui;
+
+    CariItemListModel* mModel;
 };
 
 #endif // CARIMAINWIDGET_H

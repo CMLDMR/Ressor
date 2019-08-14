@@ -2,6 +2,7 @@
 #include "ui_carimainwidget.h"
 
 #include "yenicariekledialog.h"
+#include "cariItem/cariitemlistmodel.h"
 
 CariMainWidget::CariMainWidget(mongocxx::database *_db, QWidget *parent) :
     DBClass (_db),
@@ -9,6 +10,11 @@ CariMainWidget::CariMainWidget(mongocxx::database *_db, QWidget *parent) :
     ui(new Ui::CariMainWidget)
 {
     ui->setupUi(this);
+
+    mModel = new CariItemListModel(this->db());
+
+    ui->tableView->setModel(mModel);
+    ui->tableView->resizeColumnsToContents();
 }
 
 CariMainWidget::~CariMainWidget()
