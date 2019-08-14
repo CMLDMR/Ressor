@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
-    <height>449</height>
+    <width>338</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,6 +18,12 @@
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>Cari Bilgiler</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
@@ -54,10 +60,10 @@
          </widget>
         </item>
         <item row="1" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit"/>
+         <widget class="QLineEdit" name="lineEdit_FirmaAdi"/>
         </item>
         <item row="2" column="1" colspan="2">
-         <widget class="QLineEdit" name="lineEdit_2"/>
+         <widget class="QLineEdit" name="lineEdit_FirmaYetkili"/>
         </item>
        </layout>
       </item>
@@ -69,11 +75,17 @@
      <property name="title">
       <string>Diğer Bilgiler</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="5" column="1">
-         <widget class="QLineEdit" name="lineEdit_8"/>
+         <widget class="QLineEdit" name="lineEdit_PostaKodu"/>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_7">
@@ -83,10 +95,10 @@
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QLineEdit" name="lineEdit_6"/>
+         <widget class="QLineEdit" name="lineEdit_eMail"/>
         </item>
         <item row="8" column="1">
-         <widget class="QLineEdit" name="lineEdit_11">
+         <widget class="QLineEdit" name="lineEdit_SicilNo">
           <property name="placeholderText">
            <string/>
           </property>
@@ -114,7 +126,7 @@
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QLineEdit" name="lineEdit_7"/>
+         <widget class="QLineEdit" name="lineEdit_Web"/>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_6">
@@ -131,14 +143,14 @@
          </widget>
         </item>
         <item row="7" column="1">
-         <widget class="QLineEdit" name="lineEdit_10">
+         <widget class="QLineEdit" name="lineEdit_VergiNo">
           <property name="placeholderText">
            <string/>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEdit_5"/>
+         <widget class="QLineEdit" name="lineEdit_CepTelefonu"/>
         </item>
         <item row="7" column="0">
          <widget class="QLabel" name="label_11">
@@ -169,7 +181,7 @@
          </widget>
         </item>
         <item row="6" column="1">
-         <widget class="QLineEdit" name="lineEdit_9"/>
+         <widget class="QLineEdit" name="lineEdit_VergiDairesi"/>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_8">
@@ -179,20 +191,20 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEdit_4"/>
+         <widget class="QLineEdit" name="lineEdit_Fax"/>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEdit_3"/>
+         <widget class="QLineEdit" name="lineEdit_Telefon"/>
         </item>
         <item row="9" column="1">
-         <widget class="QLineEdit" name="lineEdit_12">
+         <widget class="QLineEdit" name="lineEdit_il">
           <property name="placeholderText">
            <string/>
           </property>
          </widget>
         </item>
         <item row="10" column="1">
-         <widget class="QLineEdit" name="lineEdit_13">
+         <widget class="QLineEdit" name="lineEdit_ilce">
           <property name="placeholderText">
            <string/>
           </property>
@@ -203,8 +215,50 @@
      </layout>
     </widget>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_Kaydet">
+       <property name="text">
+        <string>Kaydet</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_KaydetCik">
+       <property name="text">
+        <string>Kaydet/Çık</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_Lapat">
+       <property name="text">
+        <string>Kapat</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_Lapat</sender>
+   <signal>clicked()</signal>
+   <receiver>YeniCariEkleDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>313</x>
+     <y>466</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>330</x>
+     <y>475</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

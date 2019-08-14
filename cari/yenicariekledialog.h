@@ -4,6 +4,8 @@
 #include <QDialog>
 #include "base/dbclass.h"
 
+class CariGrupListModel;
+
 namespace Ui {
 class YeniCariEkleDialog;
 }
@@ -21,6 +23,8 @@ private slots:
 
 private:
     Ui::YeniCariEkleDialog *ui;
+
+    CariGrupListModel* mGrupModel;
 };
 
 #endif // YENICARIEKLEDIALOG_H
