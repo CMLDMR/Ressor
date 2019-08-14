@@ -48,8 +48,6 @@ ItemBase::ItemBase(mongocxx::database *_db, const std::string &collection, bsonc
         }
     }
 
-    std::cout << __LINE__ << " " << __FUNCTION__ << " " << bsoncxx::to_json(doc.view()) << std::endl;
-
 
 }
 
@@ -75,7 +73,6 @@ QStringList ItemBase::keyList()
 {
     QStringList list;
     for (auto it = this->doc.view().cbegin() ; it != this->doc.view().cend() ; it++ ) {
-        std::cout << it->key().to_string() << std::endl;
         list.push_back(it->key().to_string().c_str());
     }
     return list;

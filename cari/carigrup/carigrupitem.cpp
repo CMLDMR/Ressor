@@ -7,7 +7,6 @@ boost::optional<CariGrub::CariGrupItem> CariGrub::CariGrupItem::Create_CariGrup(
     if( item.isValid() )
     {
         if( item.setGrupName(cariGrupName) ){
-            std::cout << bsoncxx::to_json(item.view()) << std::endl;
             return std::move(item);
         }else{
             return boost::none;
@@ -27,7 +26,6 @@ QVector<CariGrub::CariGrupItem*> CariGrub::CariGrupItem::GetList(mongocxx::datab
         for( auto doc : cursor )
         {
             CariGrupItem *item = new CariGrupItem(_db,doc);
-            std::cout << __LINE__ << " " << __FUNCTION__ << " " << item->grupName().toStdString() << std::endl;
             list.push_back((item));
         }
 
