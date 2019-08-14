@@ -2,10 +2,20 @@
 #define CARIITEMLISTMODEL_H
 
 
-class CariItemListModel : public QStandardItemModel
+#include <QStandardItemModel>
+#include "cariitem.h"
+
+
+class CariItemListModel : public QStandardItemModel , public DBClass
 {
 public:
-    CariItemListModel();
+    CariItemListModel(mongocxx::database* _db);
+
+    void initModel();
+
+
+private:
+    QVector<CariItem::CariItem*> itemList;
 };
 
 #endif // CARIITEMLISTMODEL_H
