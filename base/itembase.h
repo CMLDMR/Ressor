@@ -18,6 +18,10 @@ public:
         return this->setElement(key,value);
     }
 
+    bool addElement( const std::string &key , const QString &value ){
+        return this->setElement(key,value.toStdString());
+    }
+
     bsoncxx::types::value Element( const std::string &key);
 
     bool isValid() const;
