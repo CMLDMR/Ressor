@@ -10,6 +10,7 @@
 #include "stok/yenistokkartdialog.h"
 
 #include "cari/carimainwidget.h"
+#include "cari/yenicariekledialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -78,4 +79,14 @@ void MainWindow::on_actionCari_Hesaplar_triggered()
     ui->tabWidget->insertTab(ui->tabWidget->count(),new CariMainWidget(&mDB),"Cari Hesaplar");
 
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
+}
+
+void MainWindow::on_actionYeni_Cari_Ekle_triggered()
+{
+    auto mDialog = new YeniCariEkleDialog(&mDB);
+
+    mDialog->exec();
+
+    mDialog->deleteLater();
+
 }

@@ -32,6 +32,8 @@ private slots:
 
     void on_actionCari_Hesaplar_triggered();
 
+    void on_actionYeni_Cari_Ekle_triggered();
+
 private:
     Ui::MainWindow *ui;
 

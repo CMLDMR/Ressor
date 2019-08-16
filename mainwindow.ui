@@ -53,6 +53,7 @@
      <string>Cari</string>
     </property>
     <addaction name="actionCari_Hesaplar"/>
+    <addaction name="actionYeni_Cari_Ekle"/>
    </widget>
    <widget class="QMenu" name="menuStok">
     <property name="title">
@@ -98,6 +99,11 @@
   <action name="actionCari_Hesaplar">
    <property name="text">
     <string>Cari Hesaplar</string>
+   </property>
+  </action>
+  <action name="actionYeni_Cari_Ekle">
+   <property name="text">
+    <string>Yeni Cari Ekle</string>
    </property>
   </action>
  </widget>
