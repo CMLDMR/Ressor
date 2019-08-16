@@ -54,6 +54,7 @@
     </property>
     <addaction name="actionCari_Hesaplar"/>
     <addaction name="actionYeni_Cari_Ekle"/>
+    <addaction name="actionYeni_Cari_Grup_Ekle"/>
    </widget>
    <widget class="QMenu" name="menuStok">
     <property name="title">
@@ -104,6 +105,11 @@
   <action name="actionYeni_Cari_Ekle">
    <property name="text">
     <string>Yeni Cari Ekle</string>
+   </property>
+  </action>
+  <action name="actionYeni_Cari_Grup_Ekle">
+   <property name="text">
+    <string>Yeni Cari Grup Ekle</string>
    </property>
   </action>
  </widget>

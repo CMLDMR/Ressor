@@ -11,6 +11,7 @@
 
 #include "cari/carimainwidget.h"
 #include "cari/yenicariekledialog.h"
+#include "cari/yenicarigrupekledialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -89,4 +90,11 @@ void MainWindow::on_actionYeni_Cari_Ekle_triggered()
 
     mDialog->deleteLater();
 
+}
+
+void MainWindow::on_actionYeni_Cari_Grup_Ekle_triggered()
+{
+    auto mDialog = new YeniCariGrupEkleDialog(&mDB);
+    mDialog->exec();
+    mDialog->deleteLater();
 }
