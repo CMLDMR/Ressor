@@ -30,3 +30,8 @@ void CariMainWidget::on_pushButton_YeniCariEkle_clicked()
 
     mDialog->deleteLater();
 }
+
+void CariMainWidget::on_pushButton_Guncelle_clicked()
+{
+    mModel->initModel();
+}

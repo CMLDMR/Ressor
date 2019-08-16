@@ -21,6 +21,8 @@ public:
 private slots:
     void on_pushButton_YeniCariEkle_clicked();
 
+    void on_pushButton_Guncelle_clicked();
+
 private:
     Ui::CariMainWidget *ui;
 
