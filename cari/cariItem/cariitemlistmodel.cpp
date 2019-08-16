@@ -58,8 +58,6 @@ void CariItemListModel::initModel()
                     this->setHorizontalHeaderItem(this->columnCount(),new QStandardItem(keyList) );
                 }
             }
-
-
             for (int i = 0 ; i < this->columnCount() ; i++ ) {
                 for( auto keyList : item->keyList() )
                 {
@@ -76,10 +74,6 @@ void CariItemListModel::initModel()
                     }
                 }
             }
-
-
-
-
             CurrentRow++;
         }
     }
