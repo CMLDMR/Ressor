@@ -13,6 +13,7 @@ public:
 
 //    virtual ~ItemBase();
 
+
     template<typename T>
     bool addElement( const std::string &key , const T &value ){
         return this->setElement(key,value);

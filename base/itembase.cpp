@@ -73,6 +73,7 @@ QStringList ItemBase::keyList()
 {
     QStringList list;
     for (auto it = this->doc.view().cbegin() ; it != this->doc.view().cend() ; it++ ) {
+        if( it->key() != "_id" )
         list.push_back(it->key().to_string().c_str());
     }
     return list;
