@@ -27,6 +27,7 @@ CONFIG += c++14
 SOURCES += \
         base/dbclass.cpp \
         base/itembase.cpp \
+        base/itembasemodel.cpp \
         cari/cariItem/cariitem.cpp \
         cari/cariItem/cariitemlistmodel.cpp \
         cari/carigrup/carigrupitem.cpp \
@@ -37,9 +38,12 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
         stok/base/stokbirim.cpp \
+        stok/base/stokdepo.cpp \
+        stok/base/stokdepomodel.cpp \
         stok/base/stokkart.cpp \
         stok/base/stokkartmodel.cpp \
         stok/base/stokkategori.cpp \
+        stok/stokdepodialog.cpp \
         stok/stokkartdialog.cpp \
         stok/stokkategoridialog.cpp \
         stok/stokmaindialog.cpp \
@@ -49,6 +53,7 @@ SOURCES += \
 HEADERS += \
         base/dbclass.h \
         base/itembase.h \
+        base/itembasemodel.h \
         cari/cariItem/cariitem.h \
         cari/cariItem/cariitemlistmodel.h \
         cari/carigrup/carigrupitem.h \
@@ -59,9 +64,12 @@ HEADERS += \
         mainwindow.h \
         mongoheaders.h \
         stok/base/stokbirim.h \
+        stok/base/stokdepo.h \
+        stok/base/stokdepomodel.h \
         stok/base/stokkart.h \
         stok/base/stokkartmodel.h \
         stok/base/stokkategori.h \
+        stok/stokdepodialog.h \
         stok/stokkartdialog.h \
         stok/stokkategoridialog.h \
         stok/stokmaindialog.h \
@@ -73,6 +81,7 @@ FORMS += \
         cari/yenicariekledialog.ui \
         cari/yenicarigrupekledialog.ui \
         mainwindow.ui \
+        stok/stokdepodialog.ui \
         stok/stokkartdialog.ui \
         stok/stokkategoridialog.ui \
         stok/stokmaindialog.ui \
