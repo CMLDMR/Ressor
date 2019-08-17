@@ -64,6 +64,7 @@
     <addaction name="actionStok_Kart_Tan_mla"/>
     <addaction name="actionStok_Birimleri"/>
     <addaction name="actionStok_Kategorileri"/>
+    <addaction name="actionStok_Depolar"/>
    </widget>
    <addaction name="menuCari"/>
    <addaction name="menuStok"/>
@@ -110,6 +111,11 @@
   <action name="actionYeni_Cari_Grup_Ekle">
    <property name="text">
     <string>Yeni Cari Grup Ekle</string>
+   </property>
+  </action>
+  <action name="actionStok_Depolar">
+   <property name="text">
+    <string>Stok Depolar</string>
    </property>
   </action>
  </widget>

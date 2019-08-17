@@ -36,6 +36,8 @@ private slots:
 
     void on_actionYeni_Cari_Grup_Ekle_triggered();
 
+    void on_actionStok_Depolar_triggered();
+
 private:
     Ui::MainWindow *ui;
 

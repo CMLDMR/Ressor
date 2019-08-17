@@ -8,6 +8,7 @@
 #include "stok/yenistokbirimekledialog.h"
 #include "stok/stokkategoridialog.h"
 #include "stok/yenistokkartdialog.h"
+#include "stok/stokdepodialog.h"
 
 #include "cari/carimainwidget.h"
 #include "cari/yenicariekledialog.h"
@@ -18,17 +19,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-
-
     try {
         mClient = new mongocxx::client(mongocxx::uri(_url));
     } catch (mongocxx::exception &e) {
         std::cout << "ERROR: " << __LINE__ << " " << __FUNCTION__ << " " << e.what() << std::endl;
     }
-
     mDB = mClient->database("Ressor");
-
 }
 
 MainWindow::~MainWindow()
@@ -39,10 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionStok_Kartlar_triggered()
 {
-
-
     ui->tabWidget->insertTab(ui->tabWidget->count(),new StokMainDialog(&mDB),"Stok Kart Tanımlama");
-
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 }
 
@@ -50,21 +43,18 @@ void MainWindow::on_actionStok_Kartlar_triggered()
 void MainWindow::on_actionStok_Birimleri_triggered()
 {
     auto mDialog = std::make_unique<YeniStokBirimEkleDialog>(&mDB);
-
     mDialog->exec();
 }
 
 void MainWindow::on_actionStok_Kategorileri_triggered()
 {
     auto mDialog = std::make_unique<StokKategoriDialog>(&mDB);
-
     mDialog->exec();
 }
 
 void MainWindow::on_actionStok_Kart_Tan_mla_triggered()
 {
     auto mDialog = std::make_unique<YeniStokKartDialog>(&mDB);
-
     mDialog->exec();
 }
 
@@ -78,23 +68,26 @@ void MainWindow::on_tabWidget_tabCloseRequested(int index)
 void MainWindow::on_actionCari_Hesaplar_triggered()
 {
     ui->tabWidget->insertTab(ui->tabWidget->count(),new CariMainWidget(&mDB),"Cari Hesaplar");
-
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count()-1);
 }
 
 void MainWindow::on_actionYeni_Cari_Ekle_triggered()
 {
     auto mDialog = new YeniCariEkleDialog(&mDB);
-
     mDialog->exec();
-
     mDialog->deleteLater();
-
 }
 
 void MainWindow::on_actionYeni_Cari_Grup_Ekle_triggered()
 {
     auto mDialog = new YeniCariGrupEkleDialog(&mDB);
+    mDialog->exec();
+    mDialog->deleteLater();
+}
+
+void MainWindow::on_actionStok_Depolar_triggered()
+{
+    auto mDialog = new StokDepoDialog(&mDB);
     mDialog->exec();
     mDialog->deleteLater();
 }
