@@ -1,6 +1,18 @@
 #include "itembasemodel.h"
+#include <QStandardItem>
 
-ItemBaseModel::ItemBaseModel()
-{
 
-}
+//template<class T>
+//ItemBaseModel<T>::ItemBaseModel(mongocxx::database *_db)
+//    :DBClass (_db)
+//{
+//    this->initModel();
+//}
+
+
+//template<>
+//void ItemBaseModel<T>::initModel()
+//{
+
+//}
+
