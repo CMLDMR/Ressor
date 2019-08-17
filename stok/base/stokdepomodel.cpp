@@ -1,6 +1,9 @@
 #include "stokdepomodel.h"
 
-StokDepoModel::StokDepoModel()
-{
 
+
+StokDepoModel::StokDepoModel(mongocxx::database *_db)
+    :ItemBaseModel<StokDepo::StokDepo> (_db)
+{
+    this->initModel();
 }

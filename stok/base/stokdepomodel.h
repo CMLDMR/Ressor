@@ -2,10 +2,18 @@
 #define STOKDEPOMODEL_H
 
 
-class StokDepoModel : public ItemBaseModel
+#include "stokdepo.h"
+
+#include "base/itembasemodel.h"
+
+
+
+class StokDepoModel : public ItemBaseModel<StokDepo::StokDepo>
 {
 public:
-    StokDepoModel();
+    StokDepoModel(mongocxx::database* _db);
 };
+
+
 
 #endif // STOKDEPOMODEL_H
