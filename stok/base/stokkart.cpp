@@ -10,7 +10,7 @@ boost::optional<StokKart> StokKart::Create_StokKart(mongocxx::database *_db)
     {
         return std::move(kart);
     }else{
-        boost::none;
+        return boost::none;
     }
 }
 
